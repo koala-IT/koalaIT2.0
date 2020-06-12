@@ -3,6 +3,7 @@ package com.koalaIT.common.util;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
+
 public class ResultMap extends HashMap {
 
     public ResultMap(){
@@ -10,6 +11,11 @@ public class ResultMap extends HashMap {
     }
 
     public ResultMap(Object data){
+        this.setData(data);
+        this.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    public ResultMap(String str, Object data){
         this.setData(data);
         this.setStatus(HttpServletResponse.SC_OK);
     }
@@ -48,5 +54,5 @@ public class ResultMap extends HashMap {
     	this.put("success",success);
 	}
 
-    public void setFlag(boolean flag) { this.put("flag",flag);}
+    public void setRet(int ret) {this.put("ret",ret);}
 }
