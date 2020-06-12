@@ -1,6 +1,6 @@
 package com.koalaIT.common.interceptor;
 
-import com.lmboc.common.querypage.QueryPage;
+import com.koalaIT.common.querypage.QueryPage;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.parameter.DefaultParameterHandler;
 import org.apache.ibatis.executor.parameter.ParameterHandler;
@@ -23,6 +23,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+
 
 
 @Intercepts({ @Signature(method = "prepare", type = StatementHandler.class, args = { Connection.class }),
