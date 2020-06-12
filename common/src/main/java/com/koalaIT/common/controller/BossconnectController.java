@@ -26,7 +26,7 @@ public class BossconnectController <T extends BaseDO,E extends BaseExample>exten
         return mv;
     }
 
-    private void setProperties(){
+    private void setProperties(){     /*将模板service的方法实体化*/
         bossconnectService.setEntityMapper(bossconnectService.getBossconnectMapper());
         bossconnectService.setEntity((T)bossconnect);
 
