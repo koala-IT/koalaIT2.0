@@ -1,12 +1,16 @@
 package com.koalaIT.common.controller;
 
 import com.koalaIT.common.biz.UserService;
+import com.koalaIT.common.dto.UserDTO;
 import com.koalaIT.common.model.BaseDO;
 import com.koalaIT.common.model.BaseExample;
 import com.koalaIT.common.model.User;
+import com.koalaIT.common.model.UserExample;
+import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -25,10 +29,74 @@ public class UserController <T extends BaseDO, E extends BaseExample> extends Ba
         return mv;
     }
 
-    private void setProperties(){
-        userService.setEntityMapper(userService.getUserMapper());
-        userService.setEntity((T)user);
 
+    //查询我的信息
+    @RequestMapping(value="/myinfo.json")
+    @ResponseBody
+    public ResultMap getUserInfo(Integer user_id) {
+        ResultMap resultMap = new ResultMap();
+        if (user_id == null) {
+            resultMap.setRet(0);
+            resultMap.setError("user_id不能为空！");
+            return resultMap;
+        }
+
+        try {
+            this.setProperties();
+            T t = (T)this.selectByPrimaryKey(user_id);
+            if (t != null) {
+                User user = (User) t;
+                resultMap.setRet(1);
+                resultMap.setSuccess("查询详细信息成功！");
+                resultMap.setData(user);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            resultMap.setRet(0);
+            resultMap.setError("查询详细信息失败！");
+            return resultMap;
+        }
+
+
+        return resultMap;
+    }
+    //更改我的信息
+    @RequestMapping(value="/updmyinfo.json")
+    @ResponseBody
+    public ResultMap updateUserInfo(UserDTO userDTO) {
+        ResultMap resultMap = new ResultMap();
+        UserExample userExample = new UserExample();
+
+/*        String username = userDTO.getUserName();
+        if (StringUtils.isBlank(username)) {
+            resultMap.setRet(0);
+            resultMap.setError("用户名不能为空！");
+        }
+        String password = userDTO.getPassword();
+        if (StringUtils.isBlank(password)) {
+            resultMap.setRet(0);
+            resultMap.setError("密码不能为空！");
+        }*/
+
+        userService.setEntityMapper(userService.getUserMapper());
+        userService.setEntity((T) user);
+        this.setBizService(userService);
+
+        this.updateByExampleSelective(userDTO, userExample);
+
+        resultMap.setRet(1);
+        resultMap.setSuccess("个人信息更新成功！");
+        return resultMap;
+    }
+
+
+
+
+    private void setProperties() {
+        userService.setEntityMapper(userService.getUserMapper());
+        userService.setEntity((T) user);
         this.setBizService(userService);
     }
+
+
 }

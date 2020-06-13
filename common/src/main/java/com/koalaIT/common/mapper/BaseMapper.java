@@ -14,7 +14,7 @@ public interface BaseMapper<T,E> {
 
     int deleteByExample(E example);
 
-    int deleteByPrimaryKey(String smsCodeId);
+    int deleteByPrimaryKey(Integer smsCodeId);
 
     int insert(T record);
 
@@ -22,7 +22,7 @@ public interface BaseMapper<T,E> {
 
     List<? extends T> selectByExample(E example);
 
-    T selectByPrimaryKey(String smsCodeId);
+    T selectByPrimaryKey(Integer smsCodeId);
 
     int updateByExampleSelective(@Param("record") T record, @Param("example") E example);
 

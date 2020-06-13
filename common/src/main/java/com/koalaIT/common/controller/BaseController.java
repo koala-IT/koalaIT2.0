@@ -35,8 +35,8 @@ public abstract class BaseController<T,E> {
         }
     }
 
-    public void deleteByPrimaryKey(String recordId){
-        if (recordId != null && !recordId.equals("")){
+    public void deleteByPrimaryKey(Integer recordId){
+        if (recordId != null /*&& !recordId.equals("")*/){
             this.bizService.deleteByPrimaryKey(recordId);
         }
     }
@@ -61,9 +61,9 @@ public abstract class BaseController<T,E> {
         return list;
     }
 
-    public T selectByPrimaryKey(String recordId){
+    public T selectByPrimaryKey(Integer recordId){
         T t = null;
-        if (recordId != null && !recordId.equals("")){
+        if (recordId != null /*&& !recordId.equals("")*/){
             t = (T)this.bizService.selectByPrimaryKey(recordId);
         }
         return t;

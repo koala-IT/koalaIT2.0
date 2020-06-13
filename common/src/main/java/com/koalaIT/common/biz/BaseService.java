@@ -65,9 +65,9 @@ public abstract class BaseService<T,E>  {  /*包括了基础的增删改*/
         }
     }
 
-    public void deleteByPrimaryKey(String recordId){
+    public void deleteByPrimaryKey(Integer recordId){
         try{
-            if (recordId != null && !recordId.equals("") && this.entityMapper != null){
+            if (recordId != null  && this.entityMapper != null){
                 this.entityMapper.deleteByPrimaryKey(recordId);
             }
         }catch(Exception e){
@@ -109,10 +109,10 @@ public abstract class BaseService<T,E>  {  /*包括了基础的增删改*/
         return list;
     }
 
-    public T selectByPrimaryKey(String recordId){
+    public T selectByPrimaryKey(Integer recordId){
         T t = null;
         try{
-            if (recordId != null && !recordId.equals("") && this.entityMapper != null){
+            if (recordId != null && this.entityMapper != null){
                 t = (T)this.entityMapper.selectByPrimaryKey(recordId);
             }
         }catch(Exception e){
