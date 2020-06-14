@@ -20,6 +20,8 @@ public class ManagerService <T extends BaseDO,E extends BaseExample> extends Bas
         }
     }
 
+
+
     public ManagerMapper<T, E> getManagerMapper() {
         return managerMapper;
     }

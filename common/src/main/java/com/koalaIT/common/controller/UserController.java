@@ -67,16 +67,7 @@ public class UserController <T extends BaseDO, E extends BaseExample> extends Ba
         ResultMap resultMap = new ResultMap();
         UserExample userExample = new UserExample();
 
-/*        String username = userDTO.getUserName();
-        if (StringUtils.isBlank(username)) {
-            resultMap.setRet(0);
-            resultMap.setError("用户名不能为空！");
-        }
-        String password = userDTO.getPassword();
-        if (StringUtils.isBlank(password)) {
-            resultMap.setRet(0);
-            resultMap.setError("密码不能为空！");
-        }*/
+
 
         userService.setEntityMapper(userService.getUserMapper());
         userService.setEntity((T) user);
