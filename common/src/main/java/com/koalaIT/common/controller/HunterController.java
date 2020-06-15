@@ -78,7 +78,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
 
 
-        hunterService.setEntityMapper(hunterService.getHunterByUser());
+        hunterService.setEntityMapper(hunterService.getHunterMapper());
         hunterService.setEntity((T) hunter);
         this.setBizService(hunterService);
 
@@ -98,7 +98,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
 
 
-        hunterService.setEntityMapper(hunterService.getHunterByUser());
+        hunterService.setEntityMapper(hunterService.getHunterMapper());
         hunterService.setEntity((T) hunter);
         this.setBizService(hunterService);
 
@@ -118,14 +118,14 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
 
 
-        hunterService.setEntityMapper(hunterService.getHunterByUser());
+        hunterService.setEntityMapper(hunterService.getHunterMapper());
         hunterService.setEntity((T) hunter);
         this.setBizService(hunterService);
 
         this.deleteByPrimaryKey(hunter_id);
 
         resultMap.setRet(1);
-        resultMap.setSuccess("个人信息更新成功！");
+        resultMap.setSuccess("删除求职信息成功！");
         return resultMap;
     }
 
@@ -138,14 +138,104 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
 
 
-        hunterService.setEntityMapper(hunterService.getHunterByUser());
+        hunterService.setEntityMapper(hunterService.getHunterMapper());
         hunterService.setEntity((T) hunter);
         this.setBizService(hunterService);
 
         this.updateByPrimaryKeySelective((T) hunterDTO);
 
         resultMap.setRet(1);
-        resultMap.setSuccess("个人信息更新成功！");
+        resultMap.setSuccess("添加预约状态成功！");
+        return resultMap;
+    }
+
+    //我发布的
+    //查询hunter的信息
+    @RequestMapping(value="/publish.json")
+    @ResponseBody
+    public ResultMap getHunter(Integer user_id) {
+        ResultMap resultMap = new ResultMap();
+        HunterExample hunterExample = new HunterExample();
+
+
+        try {
+            this.setProperties();
+            List list = hunterService.selectByUser_id(user_id);
+            if (list != null) {
+                resultMap.setRet(1);
+                resultMap.setSuccess("查询详细信息成功！");
+                resultMap.setData(list);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            resultMap.setRet(0);
+            resultMap.setError("查询详细信息失败！");
+            return resultMap;
+        }
+
+        hunterExample = null;
+
+
+        return resultMap;
+    }
+
+    //我预约的
+    //查询hunter的信息
+    @RequestMapping(value="/orderboss.json")
+    @ResponseBody
+    public ResultMap findHunterByOrder(Integer user_id) {
+        ResultMap resultMap = new ResultMap();
+        HunterExample hunterExample = new HunterExample();
+
+
+        try {
+            this.setProperties();
+            List list = hunterService.selectHunterInfoByOrder(user_id);
+            if (list != null) {
+                resultMap.setRet(1);
+                resultMap.setSuccess("查询详细信息成功！");
+                resultMap.setData(list);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            resultMap.setRet(0);
+            resultMap.setError("查询详细信息失败！");
+            return resultMap;
+        }
+
+        hunterExample = null;
+
+
+        return resultMap;
+    }
+
+    //我预约的
+    //查询hunter的信息
+    @RequestMapping(value="/orderedboss.json")
+    @ResponseBody
+    public ResultMap getHunterByOrder(Integer user_id) {
+        ResultMap resultMap = new ResultMap();
+        HunterExample hunterExample = new HunterExample();
+
+
+        try {
+            this.setProperties();
+            List list = hunterService.selectHunterInfoByOrdered(user_id);
+            if (list != null) {
+                resultMap.setRet(1);
+                resultMap.setSuccess("查询详细信息成功！");
+                resultMap.setData(list);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            resultMap.setRet(0);
+            resultMap.setError("查询详细信息失败！");
+            return resultMap;
+        }
+
+        hunterExample = null;
+
+
         return resultMap;
     }
 
@@ -155,8 +245,10 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
 
 
+
+
     private void setProperties(){
-        hunterService.setEntityMapper(hunterService.getHunterByUser());
+        hunterService.setEntityMapper(hunterService.getHunterMapper());
         hunterService.setEntity((T)hunter);
 
         this.setBizService(hunterService);
