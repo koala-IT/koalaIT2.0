@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HunterMapper <T extends BaseDO, E extends BaseExample> extends BaseMapper<T,E>{
 
+
 }

@@ -1,6 +1,6 @@
 package com.koalaIT.common.interceptor;
 
-import com.lmboc.common.querypage.QueryPage;
+import com.koalaIT.common.querypage.QueryPage;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

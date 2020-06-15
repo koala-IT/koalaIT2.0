@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "login")
+@RequestMapping(value = "testlogin")
 public class LoginController <T extends BaseDO,E extends BaseExample> extends BaseController<T,E> {
     @Autowired
     UserService<T,E> userService;

@@ -10,13 +10,21 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>admin</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>admin Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
+    <dependencies>
+        <dependency>
+            <groupId>com.team04</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
-  <properties>
+    <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>

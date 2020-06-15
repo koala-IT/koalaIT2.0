@@ -2,7 +2,10 @@ package com.koalaIT.common.controller;
 
 import com.koalaIT.common.biz.HunterService;
 import com.koalaIT.common.dto.HunterDTO;
-import com.koalaIT.common.model.*;
+import com.koalaIT.common.model.BaseDO;
+import com.koalaIT.common.model.BaseExample;
+import com.koalaIT.common.model.Hunter;
+import com.koalaIT.common.model.HunterExample;
 import com.koalaIT.common.util.CommonUtils;
 import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "Hunter")
-public class HunterController <T extends BaseDO,E extends BaseExample> extends BaseController{
+public class HunterController <T extends BaseDO,E extends BaseExample> extends BaseController<T,E>{
     @Autowired
     private Hunter hunter;
 
@@ -39,12 +42,12 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
         try {
             this.setProperties();
-            List<Hunter> t = this.selectByExample((E) hunterExample);
+            List t = this.selectByExample((E) hunterExample);
             if (t != null) {
-
+                List<Hunter> list =  t;
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(t);
+                resultMap.setData(list);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -100,6 +103,46 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
         this.setBizService(hunterService);
 
         this.updateByPrimaryKey((T) hunterDTO);
+
+        resultMap.setRet(1);
+        resultMap.setSuccess("个人信息更新成功！");
+        return resultMap;
+    }
+
+    //删除求职
+    @RequestMapping(value="/delhunter.json")
+    @ResponseBody
+    public ResultMap delBossInfo(Integer hunter_id) {
+        ResultMap resultMap = new ResultMap();
+
+
+
+
+        hunterService.setEntityMapper(hunterService.getHunterByUser());
+        hunterService.setEntity((T) hunter);
+        this.setBizService(hunterService);
+
+        this.deleteByPrimaryKey(hunter_id);
+
+        resultMap.setRet(1);
+        resultMap.setSuccess("个人信息更新成功！");
+        return resultMap;
+    }
+
+    //添加预约状态
+    @RequestMapping(value="/order.json")
+    @ResponseBody
+    public ResultMap orderHunterInfo(HunterDTO hunterDTO) {
+        ResultMap resultMap = new ResultMap();
+        HunterExample hunterExample = new HunterExample();
+
+
+
+        hunterService.setEntityMapper(hunterService.getHunterByUser());
+        hunterService.setEntity((T) hunter);
+        this.setBizService(hunterService);
+
+        this.updateByPrimaryKeySelective((T) hunterDTO);
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");
