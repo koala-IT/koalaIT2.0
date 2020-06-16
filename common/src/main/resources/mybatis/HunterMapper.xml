@@ -354,19 +354,19 @@
     select hunter.*,`user`.user_name
   <!--  <include refid="Base_Column_List" />-->
     from koalait.user join koalait.hunter on hunter.user_id=`user`.user_id
-    where hunter.user_id=`user`.user_id and `user`.user_id=#{user_id,jdbcType=INTEGER}
+    where hunter.user_id=`user`.user_id and `user`.user_id=#{userId,jdbcType=INTEGER}
   </select>
   <select id="findHunterInfoByOrder" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select hunter.*,hunterconnect.`check`,checkconnect.state
     <!--  <include refid="Base_Column_List" />-->
     from koalait.hunter,koalait.hunterconnect,koalait.checkconnect
-    where hunter.hunter_id=hunterconnect.hunter_id and checkconnect.`check`=hunterconnect.`check` and hunterconnect.user_id = #{user_id,jdbcType=INTEGER}
+    where hunter.hunter_id=hunterconnect.hunter_id and checkconnect.`check`=hunterconnect.`check` and hunterconnect.user_id = #{userId,jdbcType=INTEGER}
   </select>
   <select id="getHunterInfoByOrder" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from koalait.hunter,koalait.user
-    where orderboss IS not NULL and hunter.user_id=`user`.user_id
+    where orderboss IS not NULL and hunter.user_id=`user`.user_id and `user`.user_id = #{userId,jdbcType=INTEGER}
   </select>
 
 </mapper>

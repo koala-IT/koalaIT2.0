@@ -27,14 +27,14 @@ public class HunterconnectService <T extends BaseDO,E extends BaseExample> exten
         return hunterconnectMapper;
     }
 
-    public List<Hunterconnect> findHunterByID(Integer user_id){
+    public List<Hunterconnect> findHunterByID(Integer userId){
         List<Hunterconnect> list = null;
         try{
             if (this.hunterconnectMapper == null) {
                 this.hunterconnectMapper = this.getHunterconnectMapper();
             }
-            if (user_id!= null && this.hunterconnectMapper != null){
-                list = this.hunterconnectMapper.findHunterByID(user_id);
+            if (userId!= null && this.hunterconnectMapper != null){
+                list = this.hunterconnectMapper.findHunterByID(userId);
             }
         }catch(Exception e){
             logger.error("查询"+ hunterconnectMapper.getClass().getName()+"时，出现错误！错误信息："+e.getMessage());
@@ -42,10 +42,10 @@ public class HunterconnectService <T extends BaseDO,E extends BaseExample> exten
         return list;
     }
 
-    public List<Hunterconnect> addCheck(Integer user_id){
+    public List<Hunterconnect> addCheck(Hunterconnect hunterconnect){
         List<Hunterconnect> list = null;
 
-                list = this.hunterconnectMapper.findHunterByID(user_id);
+        list = this.hunterconnectMapper.addCheck(hunterconnect);
 
         return list;
     }

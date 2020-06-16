@@ -21,7 +21,6 @@ public class ManagerController <T extends BaseDO, E extends BaseExample> extends
     @RequestMapping(value="/manager_list.html")
     public ModelAndView selectAllInfo(){
         ModelAndView mv = new ModelAndView("manager_list");
-
         return mv;
     }
 

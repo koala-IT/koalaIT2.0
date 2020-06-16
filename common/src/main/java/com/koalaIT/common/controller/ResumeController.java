@@ -10,10 +10,9 @@ import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "Resume")
@@ -32,11 +31,11 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
         return mv;
     }
     //查询我的简历
-    @RequestMapping(value="/getresume.json")
+    @RequestMapping(value="/getresume.json",method = { RequestMethod.GET})
     @ResponseBody
-    public ResultMap getResume(Integer resume_id) {
+    public ResultMap getResume(Integer resumeId) {
         ResultMap resultMap = new ResultMap();
-        if (resume_id == null) {
+        if (resumeId == null) {
             resultMap.setRet(0);
             resultMap.setError("user_id不能为空！");
             return resultMap;
@@ -44,7 +43,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
 
         try {
             this.setProperties();
-            T t = (T)this.selectByPrimaryKey(resume_id);
+            T t = (T)this.selectByPrimaryKey(resumeId);
             if (t != null) {
                 Resume resume = (Resume) t;
                 resultMap.setRet(1);
@@ -58,12 +57,11 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
             return resultMap;
         }
 
-
         return resultMap;
     }
 
     //更改我的简历
-    @RequestMapping(value="/updresume.json")
+    @RequestMapping(value="/updresume.json",method = { RequestMethod.POST})
     @ResponseBody
     public ResultMap updateResume(ResumeDTO resumeDTO) {
         ResultMap resultMap = new ResultMap();
@@ -71,9 +69,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
 
 
 
-        resumeService.setEntityMapper(resumeService.getResumeMapper());
-        resumeService.setEntity((T) resume);
-        this.setBizService(resumeService);
+        this.setProperties();
 
         this.updateByExampleSelective(resumeDTO, resumeExample);
 
@@ -83,20 +79,48 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
     }
 
     //添加简历
-    @RequestMapping(value="/addresume.json")
+    @RequestMapping(value="/addresume.json",method = {RequestMethod.POST})
     @ResponseBody
-    public ResultMap addResume(ResumeDTO resumeDTO, HttpSession session) {
+    public ResultMap addResume(ResumeDTO resumeDTO) {
         ResultMap resultMap = new ResultMap();
 
 
-        resumeService.setEntityMapper(resumeService.getResumeMapper());
-        resumeService.setEntity((T) resume);
-        this.setBizService(resumeService);
+        this.setProperties();
 
         this.insertSelective((T) resumeDTO);
 
         resultMap.setRet(1);
         resultMap.setSuccess("用户注册成功！");
+        return resultMap;
+    }
+
+    //
+    @RequestMapping(value="/orderresume.json",method = { RequestMethod.GET})
+    @ResponseBody
+    public ResultMap orderResume(String userName) {
+        ResultMap resultMap = new ResultMap();
+        if (userName == null) {
+            resultMap.setRet(0);
+            resultMap.setError("user_name不能为空！");
+            return resultMap;
+        }
+
+        try {
+            this.setProperties();
+            T t = (T)this.resumeService.findResumeByName(userName);
+            if (t != null) {
+                Resume resume = (Resume) t;
+                resultMap.setRet(1);
+                resultMap.setSuccess("查询详细信息成功！");
+                resultMap.setData(resume);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            resultMap.setRet(0);
+            resultMap.setError("查询详细信息失败！");
+            return resultMap;
+        }
+
         return resultMap;
     }
 
@@ -115,35 +139,6 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
         this.setBizService(resumeService);
     }
 
-/*    //查询我的简历投递(多表关联)
-    @RequestMapping(value="/orderresume.json")
-    @ResponseBody
-    public ResultMap orderResume(String user_name) {
-        ResultMap resultMap = new ResultMap();
-        if (user_name == null) {
-            resultMap.setRet(0);
-            resultMap.setError("user_id不能为空！");
-            return resultMap;
-        }
 
-        try {
-            this.setProperties();
-            T t = (T)this.selectByPrimaryKey(user_name);
-            if (t != null) {
-                Resume resume = (Resume) t;
-                resultMap.setRet(1);
-                resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(resume);
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-            resultMap.setRet(0);
-            resultMap.setError("查询详细信息失败！");
-            return resultMap;
-        }
-
-
-        return resultMap;
-    }*/
 
 }

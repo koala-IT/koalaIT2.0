@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface HunterconnectMapper <T extends BaseDO, E extends BaseExample> extends BaseMapper<T,E>{
 
-    List<Hunterconnect> findHunterByID(Integer user_id);
+    List<Hunterconnect> findHunterByID(Integer userId);
 
-    List<Hunterconnect> addCheck(Integer user_id);
+    List<Hunterconnect> addCheck(Hunterconnect hunterconnect);
 
 
 }

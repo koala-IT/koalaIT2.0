@@ -33,14 +33,14 @@ public class HunterService <T extends BaseDO,E extends BaseExample> extends Base
         this.hunterMapper = hunterMapper;
     }
 
-    public List<Hunter> selectByUser_id(Integer user_id){
+    public List<Hunter> selectByUser_id(Integer userId){
         List<Hunter> list = null;
         try{
             if (this.hunterMapper == null) {
                 this.hunterMapper = this.getHunterMapper();
             }
-            if (user_id!= null && this.hunterMapper != null){
-                list = this.hunterMapper.getHunterByUser(user_id);
+            if (userId!= null && this.hunterMapper != null){
+                list = this.hunterMapper.getHunterByUser(userId);
             }
         }catch(Exception e){
             logger.error("查询"+ hunter.getClass().getName()+"时，出现错误！错误信息："+e.getMessage());
@@ -48,14 +48,14 @@ public class HunterService <T extends BaseDO,E extends BaseExample> extends Base
         return list;
     }
 
-    public List<Hunter> selectHunterInfoByOrder(Integer user_id){
+    public List<Hunter> selectHunterInfoByOrder(Integer userId){
         List<Hunter> list = null;
         try{
             if (this.hunterMapper == null) {
                 this.hunterMapper = this.getHunterMapper();
             }
-            if (user_id!= null && this.hunterMapper != null){
-                list = this.hunterMapper.findHunterInfoByOrder(user_id);
+            if (userId!= null && this.hunterMapper != null){
+                list = this.hunterMapper.findHunterInfoByOrder(userId);
             }
         }catch(Exception e){
             logger.error("查询"+ hunter.getClass().getName()+"时，出现错误！错误信息："+e.getMessage());
@@ -63,14 +63,14 @@ public class HunterService <T extends BaseDO,E extends BaseExample> extends Base
         return list;
     }
 
-    public List<Hunter> selectHunterInfoByOrdered(Integer user_id){
+    public List<Hunter> selectHunterInfoByOrdered(Integer userId){
         List<Hunter> list = null;
         try{
             if (this.hunterMapper == null) {
                 this.hunterMapper = this.getHunterMapper();
             }
-            if (user_id!= null && this.hunterMapper != null){
-                list = this.hunterMapper.getHunterInfoByOrder(user_id);
+            if (userId!= null && this.hunterMapper != null){
+                list = this.hunterMapper.getHunterInfoByOrder(userId);
             }
         }catch(Exception e){
             logger.error("查询"+ hunter.getClass().getName()+"时，出现错误！错误信息："+e.getMessage());

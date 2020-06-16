@@ -11,10 +11,10 @@ import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -32,13 +32,13 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
         return mv;
     }
+
     //查询hunter的信息
-    @RequestMapping(value="/findhunter.json")
+    @RequestMapping(value="/findhunter.json",method = {RequestMethod.GET})
     @ResponseBody
     public ResultMap getHunterInfo() {
         ResultMap resultMap = new ResultMap();
         HunterExample hunterExample = new HunterExample();
-
 
         try {
             this.setProperties();
@@ -58,7 +58,6 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
         hunterExample = null;
 
-
         return resultMap;
     }
 
@@ -69,18 +68,14 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
         return mv;
     }
 
-    @RequestMapping(value="/addhunter.json")
+    @RequestMapping(value="/addhunter.json",method = {RequestMethod.POST})
     @ResponseBody
-    public ResultMap addHunterInfo(HunterDTO hunterDTO, HttpSession session) {
+    public ResultMap addHunterInfo(HunterDTO hunterDTO) {
         ResultMap resultMap = new ResultMap();
 
         hunterDTO.setHunterId( Integer.parseInt(CommonUtils.getUUID()));
 
-
-
-        hunterService.setEntityMapper(hunterService.getHunterMapper());
-        hunterService.setEntity((T) hunter);
-        this.setBizService(hunterService);
+        this.setProperties();
 
         this.insertSelective((T) hunterDTO);
 
@@ -90,17 +85,12 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
     }
 
     //更改我的hunter
-    @RequestMapping(value="/updmyinfo.json")
+    @RequestMapping(value="/updmyinfo.json",method = {RequestMethod.POST})
     @ResponseBody
     public ResultMap updateUserInfo(HunterDTO hunterDTO) {
         ResultMap resultMap = new ResultMap();
-        HunterExample hunterExample = new HunterExample();
 
-
-
-        hunterService.setEntityMapper(hunterService.getHunterMapper());
-        hunterService.setEntity((T) hunter);
-        this.setBizService(hunterService);
+        this.setProperties();
 
         this.updateByPrimaryKey((T) hunterDTO);
 
@@ -110,19 +100,14 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
     }
 
     //删除求职
-    @RequestMapping(value="/delhunter.json")
+    @RequestMapping(value="/delhunter.json",method = {RequestMethod.GET})
     @ResponseBody
-    public ResultMap delBossInfo(Integer hunter_id) {
+    public ResultMap delHunterInfo(Integer hunterId) {
         ResultMap resultMap = new ResultMap();
 
+        this.setProperties();
 
-
-
-        hunterService.setEntityMapper(hunterService.getHunterMapper());
-        hunterService.setEntity((T) hunter);
-        this.setBizService(hunterService);
-
-        this.deleteByPrimaryKey(hunter_id);
+        this.deleteByPrimaryKey(hunterId);
 
         resultMap.setRet(1);
         resultMap.setSuccess("删除求职信息成功！");
@@ -130,17 +115,12 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
     }
 
     //添加预约状态
-    @RequestMapping(value="/order.json")
+    @RequestMapping(value="/order.json",method = {RequestMethod.POST})
     @ResponseBody
     public ResultMap orderHunterInfo(HunterDTO hunterDTO) {
         ResultMap resultMap = new ResultMap();
-        HunterExample hunterExample = new HunterExample();
 
-
-
-        hunterService.setEntityMapper(hunterService.getHunterMapper());
-        hunterService.setEntity((T) hunter);
-        this.setBizService(hunterService);
+        this.setProperties();
 
         this.updateByPrimaryKeySelective((T) hunterDTO);
 
@@ -151,16 +131,14 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
     //我发布的
     //查询hunter的信息
-    @RequestMapping(value="/publish.json")
+    @RequestMapping(value="/publish.json",method = {RequestMethod.GET})
     @ResponseBody
-    public ResultMap getHunter(Integer user_id) {
+    public ResultMap getHunter(Integer userId) {
         ResultMap resultMap = new ResultMap();
-        HunterExample hunterExample = new HunterExample();
-
 
         try {
             this.setProperties();
-            List list = hunterService.selectByUser_id(user_id);
+            List list = hunterService.selectByUser_id(userId);
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
@@ -172,25 +150,20 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
             resultMap.setError("查询详细信息失败！");
             return resultMap;
         }
-
-        hunterExample = null;
-
 
         return resultMap;
     }
 
     //我预约的
     //查询hunter的信息
-    @RequestMapping(value="/orderboss.json")
+    @RequestMapping(value="/orderboss.json",method = {RequestMethod.GET})
     @ResponseBody
-    public ResultMap findHunterByOrder(Integer user_id) {
+    public ResultMap findHunterByOrder(Integer userId) {
         ResultMap resultMap = new ResultMap();
-        HunterExample hunterExample = new HunterExample();
-
 
         try {
             this.setProperties();
-            List list = hunterService.selectHunterInfoByOrder(user_id);
+            List list = hunterService.selectHunterInfoByOrder(userId);
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
@@ -202,25 +175,20 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
             resultMap.setError("查询详细信息失败！");
             return resultMap;
         }
-
-        hunterExample = null;
-
 
         return resultMap;
     }
 
     //我预约的
     //查询hunter的信息
-    @RequestMapping(value="/orderedboss.json")
+    @RequestMapping(value="/orderedboss.json",method = {RequestMethod.GET})
     @ResponseBody
-    public ResultMap getHunterByOrder(Integer user_id) {
+    public ResultMap getHunterByOrder(Integer userId) {
         ResultMap resultMap = new ResultMap();
-        HunterExample hunterExample = new HunterExample();
-
 
         try {
             this.setProperties();
-            List list = hunterService.selectHunterInfoByOrdered(user_id);
+            List list = hunterService.selectHunterInfoByOrdered(userId);
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
@@ -232,9 +200,6 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
             resultMap.setError("查询详细信息失败！");
             return resultMap;
         }
-
-        hunterExample = null;
-
 
         return resultMap;
     }

@@ -225,4 +225,10 @@
       email = #{email,jdbcType=VARCHAR}
     where resume_id = #{resumeId,jdbcType=INTEGER}
   </update>
+  <select id="findResumeByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select resume.*,`user`.user_id,`user`.user_name
+    from koalait.`user`
+    join koalait.resume on `user`.resume_id=resume.resume_id
+    where `user`.user_name=#{userName,jdbcType=VARCHAR}
+  </select>
 </mapper>

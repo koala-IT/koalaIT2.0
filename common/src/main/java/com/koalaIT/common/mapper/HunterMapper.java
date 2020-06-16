@@ -9,11 +9,11 @@ import java.util.List;
 
 @Repository
 public interface HunterMapper <T extends BaseDO, E extends BaseExample> extends BaseMapper<T,E>{
-    List<Hunter> getHunterByUser(Integer user_id);
+    List<Hunter> getHunterByUser(Integer userId);
 
-    List<Hunter> findHunterInfoByOrder(Integer user_id);
+    List<Hunter> findHunterInfoByOrder(Integer userId);
 
-    List<Hunter> getHunterInfoByOrder(Integer user_id);
+    List<Hunter> getHunterInfoByOrder(Integer userId);
 
 
 }

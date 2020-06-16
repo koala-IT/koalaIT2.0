@@ -1,16 +1,19 @@
 package com.koalaIT.common.controller;
 
 import com.koalaIT.common.biz.HunterconnectService;
-import com.koalaIT.common.model.*;
+import com.koalaIT.common.model.BaseDO;
+import com.koalaIT.common.model.BaseExample;
+import com.koalaIT.common.model.HunterExample;
+import com.koalaIT.common.model.Hunterconnect;
 import com.koalaIT.common.util.CommonUtils;
 import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -30,9 +33,9 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
     }
 
     //新增hunter
-    @RequestMapping(value="/addhunter.json")
+    @RequestMapping(value="/addhunter.json",method = { RequestMethod.POST})
     @ResponseBody
-    public ResultMap addHunterInfo(Hunterconnect hunterconnect, HttpSession session) {
+    public ResultMap addHunterInfo(Hunterconnect hunterconnect) {
         ResultMap resultMap = new ResultMap();
 
         hunterconnect.setHunterId( Integer.parseInt(CommonUtils.getUUID()));
@@ -51,19 +54,16 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
     }
 
     //删除求职
-    @RequestMapping(value="/delorder.json")
+    @RequestMapping(value="/delorder.json",method = { RequestMethod.GET})
     @ResponseBody
-    public ResultMap delHunterInfo(Integer hunter_id) {
+    public ResultMap delHunterInfo(Integer hunterId) {
         ResultMap resultMap = new ResultMap();
 
 
 
+        this.setProperties();
 
-        hunterconnectService.setEntityMapper(hunterconnectService.getHunterconnectMapper());
-        hunterconnectService.setEntity((T) hunterconnect);
-        this.setBizService(hunterconnectService);
-
-        this.deleteByPrimaryKey(hunter_id);
+        this.deleteByPrimaryKey(hunterId);
 
         resultMap.setRet(1);
         resultMap.setSuccess("删除求职信息成功！");
@@ -72,16 +72,16 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
 
     //我发布的
     //查询hunter的信息
-    @RequestMapping(value="/getorder.json")
+    @RequestMapping(value="/getorder.json",method = { RequestMethod.GET})
     @ResponseBody
-    public ResultMap getResume(Integer user_id) {
+    public ResultMap getResume(Integer userId) {
         ResultMap resultMap = new ResultMap();
         HunterExample hunterExample = new HunterExample();
 
 
         try {
             this.setProperties();
-            List list = hunterconnectService.findHunterByID(user_id);
+            List list = hunterconnectService.findHunterByID(userId);
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
@@ -101,19 +101,17 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
     }
 
     //更改我的check
-    @RequestMapping(value="/yescheck.json")
+    @RequestMapping(value="/yescheck.json",method = { RequestMethod.POST})
     @ResponseBody
-    public ResultMap addCheck(Hunterconnect hunterconnect) {
+    public ResultMap addHunterCheck(Hunterconnect hunterconnect) {
         ResultMap resultMap = new ResultMap();
-        HunterconnectExample hunterconnectExample = new HunterconnectExample();
 
 
 
-        hunterconnectService.setEntityMapper(hunterconnectService.getHunterconnectMapper());
-        hunterconnectService.setEntity((T) hunterconnect);
-        this.setBizService(hunterconnectService);
 
-        this.addCheck(hunterconnect);
+        this.setProperties();
+
+        this.hunterconnectService.addCheck(hunterconnect);
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");

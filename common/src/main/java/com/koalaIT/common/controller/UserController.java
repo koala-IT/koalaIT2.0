@@ -10,6 +10,7 @@ import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,11 +32,11 @@ public class UserController <T extends BaseDO, E extends BaseExample> extends Ba
 
 
     //查询我的信息
-    @RequestMapping(value="/myinfo.json")
+    @RequestMapping(value="/myinfo.json",method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap getUserInfo(Integer user_id) {
+    public ResultMap getUserInfo(Integer userId) {
         ResultMap resultMap = new ResultMap();
-        if (user_id == null) {
+        if (userId == null) {
             resultMap.setRet(0);
             resultMap.setError("user_id不能为空！");
             return resultMap;
@@ -43,7 +44,7 @@ public class UserController <T extends BaseDO, E extends BaseExample> extends Ba
 
         try {
             this.setProperties();
-            T t = (T)this.selectByPrimaryKey(user_id);
+            T t = (T)this.selectByPrimaryKey(userId);
             if (t != null) {
                 User user = (User) t;
                 resultMap.setRet(1);
@@ -61,7 +62,7 @@ public class UserController <T extends BaseDO, E extends BaseExample> extends Ba
         return resultMap;
     }
     //更改我的信息
-    @RequestMapping(value="/updmyinfo.json")
+    @RequestMapping(value="/updmyinfo.json",method = { RequestMethod.POST })
     @ResponseBody
     public ResultMap updateUserInfo(UserDTO userDTO) {
         ResultMap resultMap = new ResultMap();
