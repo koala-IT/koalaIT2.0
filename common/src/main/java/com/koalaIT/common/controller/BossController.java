@@ -168,7 +168,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
         resultMap.setSuccess("添加预约状态成功！");
         return resultMap;
     }
-    //我发布的
+
     //查询boss的信息
     @RequestMapping(value="/publish.json",method = { RequestMethod.GET })
     @ResponseBody
