@@ -6,9 +6,7 @@ import com.koalaIT.common.util.CommonUtils;
 import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -61,7 +59,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
     //条件查询
     @RequestMapping(value="/searchboss.json", method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap findHunterByOrder(String bossTitle) {
+    public ResultMap findHunterByOrder(@RequestParam String bossTitle) {
         ResultMap resultMap = new ResultMap();
 
 
@@ -117,19 +115,23 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
     //更改我的boss
     @RequestMapping(value="/getboss.json", method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap getBossInfoById(Integer bossId) {
+    public ResultMap getBossInfoById(@RequestParam Integer bossId) {
         ResultMap resultMap = new ResultMap();
-        List<Boss> list = null;
 
-
+        //以后这里可以放置检验bossId是否为空的方法
+/*        if (StringUtils.isBlank(rid)) {
+            resultMap.setRet(0);
+            resultMap.setError("rid不能为空！");
+            return resultMap;
+        }*/
 
         try {
             this.setProperties();
-            list = (List<Boss>) bossService.selectByPrimaryKey(bossId);
-            if (list != null) {
+            T t =  this.selectByPrimaryKey(bossId);
+            if (t != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.put("areaBossList",list);
+                resultMap.put("areaBossList",t);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -147,7 +149,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
 
     @RequestMapping(value="/updateboss.json",method = { RequestMethod.POST })
     @ResponseBody
-    public ResultMap updateBossInfo(Boss boss) {
+    public ResultMap updateBossInfo( Boss boss) {
         ResultMap resultMap = new ResultMap();
 
 
@@ -167,7 +169,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
     //删除信息
     @RequestMapping(value="/delboss.json",method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap delBossInfo(Integer bossId) {
+    public ResultMap delBossInfo(@RequestParam Integer bossId) {
         ResultMap resultMap = new ResultMap();
 
 
@@ -206,7 +208,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
     //查询boss的信息
     @RequestMapping(value="/publish.json",method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap getBoss(Integer userId) {
+    public ResultMap getBoss(@RequestParam Integer userId) {
         ResultMap resultMap = new ResultMap();
 
         try {
@@ -229,7 +231,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
     //我预约的
     @RequestMapping(value="/orderhunter.json",method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap findBossByOrder(Integer userId) {
+    public ResultMap findBossByOrder(@RequestParam Integer userId) {
         ResultMap resultMap = new ResultMap();
 
         try {
@@ -252,7 +254,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
     //预约我的
     @RequestMapping(value="/orderedhunter.json",method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap getBossByOrder(Integer userId) {
+    public ResultMap getBossByOrder(@RequestParam Integer userId) {
         ResultMap resultMap = new ResultMap();
 
         try {

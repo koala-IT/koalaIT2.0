@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "SysLog")
-public class SysLogController <T extends BaseDO, E extends BaseExample> extends BaseController{
+public class SysLogController <T extends BaseDO, E extends BaseExample> extends BaseController<T,E>{
     @Autowired
     private SysLog sysLog;
 

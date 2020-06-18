@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "Resume")
-public class ResumeController <T extends BaseDO, E extends BaseExample> extends BaseController{
+public class ResumeController <T extends BaseDO, E extends BaseExample> extends BaseController<T, E>{
     @Autowired
     private Resume resume;
 
@@ -33,7 +34,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
     //查询我的简历
     @RequestMapping(value="/getresume.json",method = { RequestMethod.GET})
     @ResponseBody
-    public ResultMap getResume(Integer resumeId) {
+    public ResultMap getResume(@RequestParam Integer resumeId) {
         ResultMap resultMap = new ResultMap();
         if (resumeId == null) {
             resultMap.setRet(0);
@@ -43,7 +44,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
 
         try {
             this.setProperties();
-            T t = (T)this.selectByPrimaryKey(resumeId);
+            T t = this.selectByPrimaryKey(resumeId);
             if (t != null) {
                 Resume resume = (Resume) t;
                 resultMap.setRet(1);
@@ -71,7 +72,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
 
         this.setProperties();
 
-        this.updateByExampleSelective(resumeDTO, resumeExample);
+        this.updateByExampleSelective((T)resumeDTO, (E)resumeExample);
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");
@@ -99,7 +100,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
     //
     @RequestMapping(value="/orderresume.json",method = { RequestMethod.GET})
     @ResponseBody
-    public ResultMap orderResume(String userName) {
+    public ResultMap orderResume(@RequestParam String userName) {
         ResultMap resultMap = new ResultMap();
         if (userName == null) {
             resultMap.setRet(0);

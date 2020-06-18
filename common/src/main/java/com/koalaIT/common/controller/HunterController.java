@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -86,6 +87,35 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
     }
 
     //更改我的hunter
+    @RequestMapping(value="/gethunter.json", method = { RequestMethod.GET })
+    @ResponseBody
+    public ResultMap getHunterInfoById(@RequestParam Integer hunterId) {
+        ResultMap resultMap = new ResultMap();
+
+        //以后这里可以放置检验bossId是否为空的方法
+/*        if (StringUtils.isBlank(rid)) {
+            resultMap.setRet(0);
+            resultMap.setError("rid不能为空！");
+            return resultMap;
+        }*/
+
+        try {
+            this.setProperties();
+            T t =  this.selectByPrimaryKey(hunterId);
+            if (t != null) {
+                resultMap.setRet(1);
+                resultMap.setSuccess("查询详细信息成功！");
+                resultMap.put("areaHunterList",t);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            resultMap.setRet(0);
+            resultMap.setError("查询详细信息失败！");
+            return resultMap;
+        }
+
+        return resultMap;
+    }
     @RequestMapping(value="/updmyinfo.json",method = {RequestMethod.POST})
     @ResponseBody
     public ResultMap updateUserInfo(HunterDTO hunterDTO) {
@@ -104,7 +134,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
     //删除求职
     @RequestMapping(value="/delhunter.json",method = {RequestMethod.GET})
     @ResponseBody
-    public ResultMap delHunterInfo(Integer hunterId) {
+    public ResultMap delHunterInfo(@RequestParam Integer hunterId) {
         ResultMap resultMap = new ResultMap();
 
         this.setProperties();
@@ -137,7 +167,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
     //查询hunter的信息
     @RequestMapping(value="/publish.json",method = {RequestMethod.GET})
     @ResponseBody
-    public ResultMap getHunter(Integer userId) {
+    public ResultMap getHunter(@RequestParam Integer userId) {
         ResultMap resultMap = new ResultMap();
 
         try {
@@ -162,7 +192,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
     //查询hunter的信息
     @RequestMapping(value="/orderboss.json",method = {RequestMethod.GET})
     @ResponseBody
-    public ResultMap findHunterByOrder(Integer userId) {
+    public ResultMap findHunterByOrder(@RequestParam Integer userId) {
         ResultMap resultMap = new ResultMap();
 
         try {
@@ -187,7 +217,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
     //查询hunter的信息
     @RequestMapping(value="/orderedboss.json",method = {RequestMethod.GET})
     @ResponseBody
-    public ResultMap getHunterByOrder(Integer userId) {
+    public ResultMap getHunterByOrder(@RequestParam Integer userId) {
         ResultMap resultMap = new ResultMap();
 
         try {

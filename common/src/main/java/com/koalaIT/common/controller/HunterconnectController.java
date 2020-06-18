@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,7 +56,7 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
     //删除求职
     @RequestMapping(value="/delorder.json",method = { RequestMethod.GET})
     @ResponseBody
-    public ResultMap delHunterInfo(Integer hunterId) {
+    public ResultMap delHunterInfo(@RequestParam Integer hunterId) {
         ResultMap resultMap = new ResultMap();
 
 
@@ -74,7 +75,7 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
     //查询hunter的信息
     @RequestMapping(value="/getorder.json",method = { RequestMethod.GET})
     @ResponseBody
-    public ResultMap getResume(Integer userId) {
+    public ResultMap getResume(@RequestParam Integer userId) {
         ResultMap resultMap = new ResultMap();
         HunterExample hunterExample = new HunterExample();
 

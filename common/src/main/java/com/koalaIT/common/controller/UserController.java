@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "User")
-public class UserController <T extends BaseDO, E extends BaseExample> extends BaseController {
+public class UserController <T extends BaseDO, E extends BaseExample> extends BaseController <T,E>{
     @Autowired
     private User user;
 
@@ -72,7 +72,7 @@ public class UserController <T extends BaseDO, E extends BaseExample> extends Ba
 
         this.setProperties();
 
-        this.updateByExampleSelective(userDTO, userExample);
+        this.updateByExampleSelective((T)userDTO, (E)userExample);
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");

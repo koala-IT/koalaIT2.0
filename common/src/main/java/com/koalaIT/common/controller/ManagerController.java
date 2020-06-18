@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "Manager")
-public class ManagerController <T extends BaseDO, E extends BaseExample> extends BaseController{
+public class ManagerController <T extends BaseDO, E extends BaseExample> extends BaseController<T,E>{
     @Autowired
     private Manager manager;
 

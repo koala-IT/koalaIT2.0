@@ -8,9 +8,7 @@ import com.koalaIT.common.util.CommonUtils;
 import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,7 +53,7 @@ public class BossconnectController <T extends BaseDO,E extends BaseExample>exten
     //取消预约
     @RequestMapping(value="/delorder.json",method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap delBossconnect(Bossconnect bossconnect) {
+    public ResultMap delBossconnect(@RequestBody Bossconnect bossconnect) {
         ResultMap resultMap = new ResultMap();
 
         this.setProperties();
@@ -71,7 +69,7 @@ public class BossconnectController <T extends BaseDO,E extends BaseExample>exten
     //
     @RequestMapping(value="/getorder.json",method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap getResume(Integer userId) {
+    public ResultMap getResume(@RequestParam Integer userId) {
         ResultMap resultMap = new ResultMap();
 
         try {
