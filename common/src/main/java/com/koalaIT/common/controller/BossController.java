@@ -44,7 +44,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
                 List<Hunter> list =  t;
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("areaBossList",list);
             }
         } catch(Exception e) {
             e.printStackTrace();

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.koalaIT.common.mapper.HunterconnectMapper" >
+  <resultMap id="BaseResultMap" type="com.koalaIT.common.model.Hunterconnect" >
+    <id column="number" property="number" jdbcType="INTEGER" />
+    <result column="hunter_id" property="hunterId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="check" property="check" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    `number`, hunter_id, user_id, `check `
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.koalaIT.common.model.HunterconnectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hunterconnect
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hunterconnect
+    where `number` = #{number,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hunterconnect
+    where `number` = #{number,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.koalaIT.common.model.HunterconnectExample" >
+    delete from hunterconnect
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.koalaIT.common.model.Hunterconnect" >
+    insert into hunterconnect (`number`, hunter_id, user_id,
+      check)
+    values (#{number,jdbcType=INTEGER}, #{hunterId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{check,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.koalaIT.common.model.Hunterconnect" >
+    insert into hunterconnect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        `number`,
+      </if>
+      <if test="hunterId != null" >
+        hunter_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="check != null" >
+        `check`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="hunterId != null" >
+        #{hunterId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="check != null" >
+        #{check,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.koalaIT.common.model.HunterconnectExample" resultType="java.lang.Integer" >
+    select count(*) from hunterconnect
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update hunterconnect
+    <set >
+      <if test="record.number != null" >
+        `number` = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.hunterId != null" >
+        hunter_id = #{record.hunterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.check != null" >
+        `check` = #{record.check,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update hunterconnect
+    set `number` = #{record.number,jdbcType=INTEGER},
+      hunter_id = #{record.hunterId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      `check` = #{record.check,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.koalaIT.common.model.Hunterconnect" >
+    update hunterconnect
+    <set >
+      <if test="hunterId != null" >
+        hunter_id = #{hunterId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="check != null" >
+        `check` = #{check,jdbcType=INTEGER},
+      </if>
+    </set>
+    where `number` = #{number,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.koalaIT.common.model.Hunterconnect" >
+    update hunterconnect
+    set hunter_id = #{hunterId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      `check` = #{check,jdbcType=INTEGER}
+    where `number` = #{number,jdbcType=INTEGER}
+  </update>
+  <select id="findHunterByID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select `user`.user_name,hunterconnect.*,hunter.hunter_title,hunter.salary,hunter.orderboss,`checkconnect`.state
+    <!--<include refid="Base_Column_List" />-->
+    from koalait.hunter,koalait.user,koalait.checkconnect,koalait.hunterconnect
+    where hunterconnect.check=checkconnect.check and hunterconnect.user_id=`user`.user_id and hunterconnect.hunter_id=hunter.hunter_id and `hunter`.user_id=#{userId,jdbcType=INTEGER}
+  </select>
+  <update id="addCheck" parameterType="com.koalaIT.common.model.Hunterconnect" >
+    update `koalait`.`hunterconnect`
+    set
+      check = #{check,jdbcType=INTEGER}
+    where hunter_id = #{hunterId,jdbcType=INTEGER} and  user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+</mapper>
