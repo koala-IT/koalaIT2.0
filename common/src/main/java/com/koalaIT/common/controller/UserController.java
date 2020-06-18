@@ -49,7 +49,7 @@ public class UserController <T extends BaseDO, E extends BaseExample> extends Ba
                 User user = (User) t;
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(user);
+                resultMap.put("userList", user);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -70,14 +70,13 @@ public class UserController <T extends BaseDO, E extends BaseExample> extends Ba
 
 
 
-        userService.setEntityMapper(userService.getUserMapper());
-        userService.setEntity((T) user);
-        this.setBizService(userService);
+        this.setProperties();
 
         this.updateByExampleSelective(userDTO, userExample);
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 

@@ -47,7 +47,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
                 List<Hunter> list =  t;
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("areaHunterList",list);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -62,11 +62,11 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
     }
 
     //新增hunter
-    @RequestMapping(value="/addhunter.html")
+/*    @RequestMapping(value="/addhunter.html")
     public ModelAndView addHunterInfo(ModelAndView mv) {
         mv.setViewName("addhunter");
         return mv;
-    }
+    }*/
 
     @RequestMapping(value="/addhunter.json",method = {RequestMethod.POST})
     @ResponseBody
@@ -81,6 +81,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
         resultMap.setRet(1);
         resultMap.setSuccess("用户注册成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -96,6 +97,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -111,6 +113,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
         resultMap.setRet(1);
         resultMap.setSuccess("删除求职信息成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -126,6 +129,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
 
         resultMap.setRet(1);
         resultMap.setSuccess("添加预约状态成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -142,7 +146,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("areaHunterList",list);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -167,7 +171,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("areaHunterList",list);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -192,7 +196,7 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("areaHunterList",list);
             }
         } catch(Exception e) {
             e.printStackTrace();

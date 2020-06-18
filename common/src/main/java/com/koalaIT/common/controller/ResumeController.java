@@ -48,7 +48,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
                 Resume resume = (Resume) t;
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(resume);
+                resultMap.put("resumeList", resume);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -75,6 +75,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -91,6 +92,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
 
         resultMap.setRet(1);
         resultMap.setSuccess("用户注册成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -112,7 +114,7 @@ public class ResumeController <T extends BaseDO, E extends BaseExample> extends 
                 Resume resume = (Resume) t;
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(resume);
+                resultMap.put("resumeList", resume);
             }
         } catch(Exception e) {
             e.printStackTrace();

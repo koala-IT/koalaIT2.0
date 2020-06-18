@@ -33,7 +33,7 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
     }
 
     //新增hunter
-    @RequestMapping(value="/addhunter.json",method = { RequestMethod.POST})
+    @RequestMapping(value="/orderhunter.json",method = { RequestMethod.POST})
     @ResponseBody
     public ResultMap addHunterInfo(Hunterconnect hunterconnect) {
         ResultMap resultMap = new ResultMap();
@@ -42,14 +42,13 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
 
 
 
-        hunterconnectService.setEntityMapper(hunterconnectService.getHunterconnectMapper());
-        hunterconnectService.setEntity((T) hunterconnect);
-        this.setBizService(hunterconnectService);
+        this.setProperties();
 
         this.insertSelective((T) hunterconnect);
 
         resultMap.setRet(1);
         resultMap.setSuccess("用户注册成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -67,6 +66,7 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
 
         resultMap.setRet(1);
         resultMap.setSuccess("删除求职信息成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -85,7 +85,7 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("hunterlist",list);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -115,6 +115,7 @@ public class HunterconnectController <T extends BaseDO,E extends BaseExample> ex
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 

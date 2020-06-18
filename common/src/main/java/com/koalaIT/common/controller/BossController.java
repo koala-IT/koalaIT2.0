@@ -72,7 +72,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("areaBossList",list);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -111,9 +111,40 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
 
         resultMap.setRet(1);
         resultMap.setSuccess("用户注册成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
     //更改我的boss
+    @RequestMapping(value="/getboss.json", method = { RequestMethod.GET })
+    @ResponseBody
+    public ResultMap getBossInfoById(Integer bossId) {
+        ResultMap resultMap = new ResultMap();
+        List<Boss> list = null;
+
+
+
+        try {
+            this.setProperties();
+            list = (List<Boss>) bossService.selectByPrimaryKey(bossId);
+            if (list != null) {
+                resultMap.setRet(1);
+                resultMap.setSuccess("查询详细信息成功！");
+                resultMap.put("areaBossList",list);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            resultMap.setRet(0);
+            resultMap.setError("查询详细信息失败！");
+            return resultMap;
+        }
+
+
+
+
+        return resultMap;
+    }
+
+
     @RequestMapping(value="/updateboss.json",method = { RequestMethod.POST })
     @ResponseBody
     public ResultMap updateBossInfo(Boss boss) {
@@ -129,6 +160,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -147,6 +179,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
 
         resultMap.setRet(1);
         resultMap.setSuccess("删除求职信息成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -166,6 +199,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
 
         resultMap.setRet(1);
         resultMap.setSuccess("添加预约状态成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
 
@@ -181,7 +215,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("areaBossList", list);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -204,7 +238,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("areaBossList",list);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -227,7 +261,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("areaBossList", list);
             }
         } catch(Exception e) {
             e.printStackTrace();

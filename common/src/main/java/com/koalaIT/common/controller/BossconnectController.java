@@ -49,6 +49,7 @@ public class BossconnectController <T extends BaseDO,E extends BaseExample>exten
 
         resultMap.setRet(1);
         resultMap.setSuccess("用户注册成功！");
+        resultMap.put("success", 1);
         return resultMap;
     }
     //取消预约
@@ -63,6 +64,7 @@ public class BossconnectController <T extends BaseDO,E extends BaseExample>exten
 
         resultMap.setRet(1);
         resultMap.setSuccess("删除求职信息成功！");
+   /*     resultMap.put("success",1);*/
         return resultMap;
     }
 
@@ -78,7 +80,7 @@ public class BossconnectController <T extends BaseDO,E extends BaseExample>exten
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
-                resultMap.setData(list);
+                resultMap.put("infoList",list);
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -106,6 +108,7 @@ public class BossconnectController <T extends BaseDO,E extends BaseExample>exten
 
         resultMap.setRet(1);
         resultMap.setSuccess("个人信息更新成功！");
+        resultMap.put("success",1);
         return resultMap;
     }
 
