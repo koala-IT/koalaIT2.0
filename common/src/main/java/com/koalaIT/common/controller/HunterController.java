@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "Hunter")
+@RequestMapping(value = "hunter")
 public class HunterController <T extends BaseDO,E extends BaseExample> extends BaseController<T,E>{
     @Autowired
     private Hunter hunter;

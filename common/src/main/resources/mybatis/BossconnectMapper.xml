@@ -193,7 +193,7 @@
       `check` = #{check,jdbcType=INTEGER}
     where `number` = #{number,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="findBossByID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select `user`.user_name,bossconnect.*,boss.boss_title,boss.price,boss.orderhunter,`checkconnect`.state
 
     from  koalait.boss,koalait.user,koalait.checkconnect,koalait.bossconnect

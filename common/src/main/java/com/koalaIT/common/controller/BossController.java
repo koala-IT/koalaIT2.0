@@ -29,7 +29,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
         return mv;
     }
 
-    //查询hunter的信息
+    //查询boss的信息
     @RequestMapping(value="/findboss.json",method = { RequestMethod.GET })
     @ResponseBody
     public ResultMap getBossInfo() {

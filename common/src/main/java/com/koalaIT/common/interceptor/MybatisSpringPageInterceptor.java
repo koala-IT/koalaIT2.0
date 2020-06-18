@@ -25,8 +25,6 @@ import java.util.Map;
 import java.util.Properties;
 
 
-
-
 @Intercepts({ @Signature(method = "prepare", type = StatementHandler.class, args = { Connection.class }),
 		@Signature(method = "query", type = Executor.class, args = { MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class }) })
 public class MybatisSpringPageInterceptor implements Interceptor {

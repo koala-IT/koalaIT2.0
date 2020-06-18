@@ -13,7 +13,9 @@ import com.koalaIT.common.util.VerifyCodeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,7 +26,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "testlogin")
+@RequestMapping(value = "login")
 public class LoginController <T extends BaseDO,E extends BaseExample> extends BaseController<T,E> {
     @Autowired
     UserService<T,E> userService;
@@ -40,18 +42,18 @@ public class LoginController <T extends BaseDO,E extends BaseExample> extends Ba
         return mv;
     }
 
-    @RequestMapping(value="/login.json")
+    @RequestMapping(value="/login.json",method = { RequestMethod.POST })
     @ResponseBody
-    public ResultMap login(UserDTO userDTO, HttpSession session) {
+    public ResultMap login(@RequestBody UserDTO userDTO, HttpSession session) {
         ResultMap resultMap = new ResultMap();
-        String cc = userDTO.getCc();
+/*        String cc = userDTO.getCc();
         if (StringUtils.isNotBlank(cc)) {
             if (!cc.equalsIgnoreCase((String) session.getAttribute("cc"))) {
                 resultMap.setRet(0); //0表示失败
                 resultMap.setError("验证码不正确！");
                 return resultMap;
             }
-        }
+        }*/
 
         String userName = userDTO.getUserName();
         String psd = userDTO.getPassword();
@@ -66,13 +68,13 @@ public class LoginController <T extends BaseDO,E extends BaseExample> extends Ba
 
         List list = userService.selectByExample((E) userExample);
         if (list != null && list.size() > 0) {
-            User tabUser = (User) list.get(0);
+            User user = (User) list.get(0);
             session.setAttribute("userId",user.getUserId());
             session.setAttribute("userName",user.getUserName());
 
             resultMap.setRet(1);
             resultMap.setSuccess("登陆成功！");
-            resultMap.put("userName",user.getUserName());
+            resultMap.put("success",list);
         }
         userExample = null;
 
