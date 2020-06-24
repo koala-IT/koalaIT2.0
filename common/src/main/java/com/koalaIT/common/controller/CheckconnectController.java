@@ -16,7 +16,7 @@ public class CheckconnectController <T extends BaseDO,E extends BaseExample> ext
     private Checkconnect checkconnect;
 
     @Autowired
-    private CheckconnectService <T,E> checkconnectService;
+    private CheckconnectService<T,E> checkconnectService;
 
     @RequestMapping(value = "/checkconnect_list.html")
     public ModelAndView selectAllInfo(){

@@ -89,6 +89,22 @@ public class BossService <T extends BaseDO,E extends BaseExample> extends BaseSe
         return list;
     }
 
+    public List<Boss> getMyBossCollect(Integer userId){
+        List<Boss> list = null;
+        try{
+            if (this.bossMapper == null) {
+                this.bossMapper = this.getBossMapper();
+            }
+            if (userId!= null && this.bossMapper != null){
+                list = this.bossMapper.fingMyBossCollect(userId);
+            }
+        }catch(Exception e){
+            logger.error("查询"+ boss.getClass().getName()+"时，出现错误！错误信息："+e.getMessage());
+        }
+        return list;
+    }
+
+
 
 
     public void setBossMapper(BossMapper<T, E> bossMapper) {

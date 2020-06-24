@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CheckconnectService <T extends BaseDO,E extends BaseExample> extends BaseService<T,E>{
+public class CheckconnectService<T extends BaseDO,E extends BaseExample> extends BaseService<T,E>{
     private Logger logger = Logger.getLogger(CheckconnectService.class);
 
     @Autowired

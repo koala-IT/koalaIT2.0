@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ResumeExample extends BaseExample{
+public class ResumeExample extends  BaseExample{
     protected String orderByClause;
 
     protected boolean distinct;

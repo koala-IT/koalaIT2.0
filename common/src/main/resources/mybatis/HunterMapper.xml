@@ -352,7 +352,7 @@
   </update>
   <select id="getHunterByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select hunter.*,`user`.user_name
-  <!--  <include refid="Base_Column_List" />-->
+    <!--  <include refid="Base_Column_List" />-->
     from koalait.user join koalait.hunter on hunter.user_id=`user`.user_id
     where hunter.user_id=`user`.user_id and `user`.user_id=#{userId,jdbcType=INTEGER}
   </select>
@@ -368,5 +368,4 @@
     from koalait.hunter,koalait.user
     where orderboss IS not NULL and hunter.user_id=`user`.user_id and `user`.user_id = #{userId,jdbcType=INTEGER}
   </select>
-
 </mapper>

@@ -7,7 +7,6 @@ import com.koalaIT.common.model.BaseDO;
 import com.koalaIT.common.model.BaseExample;
 import com.koalaIT.common.model.User;
 import com.koalaIT.common.model.UserExample;
-import com.koalaIT.common.util.CommonUtils;
 import com.koalaIT.common.util.ResultMap;
 import com.koalaIT.common.util.VerifyCodeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +32,8 @@ public class LoginController <T extends BaseDO,E extends BaseExample> extends Ba
 
     @Autowired
     User user;
+
+
 
 
     //登入
@@ -74,9 +75,11 @@ public class LoginController <T extends BaseDO,E extends BaseExample> extends Ba
 
             resultMap.setRet(1);
             resultMap.setSuccess("登陆成功！");
-            resultMap.put("success",list);
+            resultMap.put("success",user.getUserId());
         }
         userExample = null;
+
+
 
         return resultMap;
     }
@@ -96,7 +99,7 @@ public class LoginController <T extends BaseDO,E extends BaseExample> extends Ba
 
     @RequestMapping(value="/register.json")
     @ResponseBody
-    public ResultMap register(UserDTO userDTO,HttpSession session) {
+    public ResultMap register(@RequestBody UserDTO userDTO,HttpSession session) {
         ResultMap resultMap = new ResultMap();
         String cc = userDTO.getCc();
         if (StringUtils.isNotBlank(cc)) {
@@ -106,9 +109,9 @@ public class LoginController <T extends BaseDO,E extends BaseExample> extends Ba
                 return resultMap;
             }
         }
-        userDTO.setUserId( Integer.parseInt(CommonUtils.getUUID()));
-        String username = userDTO.getUserName();
-        if (StringUtils.isBlank(username)) {
+
+        String userName = userDTO.getUserName();
+        if (StringUtils.isBlank(userName)) {
             resultMap.setRet(0);
             resultMap.setError("用户名不能为空！");
         }
@@ -153,7 +156,36 @@ public class LoginController <T extends BaseDO,E extends BaseExample> extends Ba
         session.setAttribute("cc",code);
     }
 
-    //
+/*    *//*
+     * 加入测试数据
+     *//*
+    private void addTestData(int timeInterval) {
+        Calendar calendar = Calendar.getInstance();
+        Date time = calendar.getTime();
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                TabRoute tRoute = new TabRoute();
+                tRoute.setRid(CommonUtils.getUUID());
+                tRoute.setCid(5);
+                tRoute.setCount((int) (Math.random() * (500-100) + 100));
+                tRoute.setPrice(900.0);
+                tRoute.setRdate(DateUtil.strByDate(new Date(),"yyyy-MM-dd HH:mm:ss"));
+                tRoute.setSid(1);
+                tRoute.setRflag("1");
+                tRoute.setIsthemetour("0");
+                tRoute.setRname("【张家界高铁4天 深度纯玩高级团】天门山 玻璃栈道 大峡谷玻璃桥");
+                tRoute.setRouteintroduce("游览天门山森林公园，挑战玻璃栈道+大峡谷玻璃桥 ，品张家界土家风味餐！");
+
+                tabRouteService.setEntityMapper(tabRouteService.getTabRouteMapper());
+                tabRouteService.setEntity((T) tRoute);
+                tabRouteService.insertSelective((T) tRoute);//通过插入来查看刷新
+                tRoute = null;
+            }
+        }, time, timeInterval);
+
+        currentTimer = timer;
+    }*/
 
 
 }

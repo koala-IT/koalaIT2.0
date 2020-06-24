@@ -17,5 +17,7 @@ public interface BossMapper <T extends BaseDO, E extends BaseExample> extends Ba
 
     List<Boss> getBossInfoByOrder(Integer userId);
 
+    List<Boss> fingMyBossCollect(Integer userId);
+
 
 }

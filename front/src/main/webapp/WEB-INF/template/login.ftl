@@ -1,86 +1,154 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-
+<html >
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="Dashboard">
-  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-  <title>Dashio - Bootstrap Admin Template</title>
+    <#include "/common/header.ftl"/>
+    <title>用户登录界面</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        #a{
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 50px;
+            border-radius: 5px;
+            width: 500px;
+            height: 240px;
+        }
 
-  <!-- Favicons -->
-  <link href="/img/favicon.png" rel="icon">
-  <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
+        input[type=text],input[type=password]{
+            width: 100%;
+            padding: 12px 20px;
+            height: 100%;
+            display: inline-block;
+            border: 0px solid #ccc;
+            border-radius: 5px 5px 0  0 ;
+            box-sizing: border-box;
+            font-size: 25px;
+            background-color: #232532;
+            color: white;
 
-  <!-- Bootstrap core CSS -->
-  <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!--external css-->
-  <link href="/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-  <!-- Custom styles for this template -->
-  <link href="/css/style.css" rel="stylesheet">
-  <link href="/css/style-responsive.css" rel="stylesheet">
-  
-  
+            padding-left: 60px;
+        }
+        input[type=text]:focus,input[type=password]:focus{
+
+            border: 2px solid #ccc;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color:#3399CC;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 25px;
+        }
+
+        input[type=submit]:hover {
+            background-color: deepskyblue;
+        }
+        .div-bor{
+            position: relative;
+            height: 80px;
+        }
+
+        .icon-user{
+            position: absolute;
+            top:25%;
+            left:10px;
+            font-size: 35px;
+            z-index:5;
+            color: gray;
+        }
+
+    </style>
 </head>
 
-<body>
-  <!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-  <div id="login-page">
-    <div class="container">
-      <form class="form-login" method="get" th:action="@{/login/main}">
-        <h2 class="form-login-heading">欢迎回来</h2>
-        <div class="login-wrap">
-          <input type="text" class="form-control" placeholder="managerId" name="managerId" autofocus>
-          <br>
-          <input type="password" class="form-control" name="password" placeholder="密码">
-          <label class="checkbox">
-            <input type="checkbox" value="remember-me"> 记住我
-            <span class="pull-right">
-            <a data-toggle="modal" href="login.ftl#myModal"> 忘记密码？</a>
-            </span>
-            </label>
-          <button class="btn btn-theme btn-block"  type="submit"><i class="fa fa-lock"></i> 登录</button>
-          <hr>
+<body bgcolor="#353F58" style="text-align: center">
+<br>
+<br>
+<img src="../libs/loginIcon.png" style="font-size: 200px;">
+<div id="a">
+    <form id='loginFrm'  autocomplete="off">
+        <div class="div-bor">
+            <i class="layui-icon layui-icon-friends icon-user" ></i>
+            <input   id="userAccount" type="text" name="username" placeholder="用户名">
         </div>
-      </form>
-     </div>
-  </div>
-        <!-- Modal -->
-        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Forgot Password ?</h4>
-              </div>
-              <div class="modal-body">
-                <p>Enter your e-mail address below to reset your password.</p>
-                <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
-              </div>
-              <div class="modal-footer">
-                <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                <button class="btn btn-theme" type="button">Submit</button>
-              </div>
-            </div>
-          </div>
+        <div class="div-bor" >
+            <i class="layui-icon layui-icon-password icon-user" ></i>
+            <input style="border-radius: 0px 0px 0px 0px;" id="password" type="password"  name="password" placeholder="密码">
         </div>
-        <!-- modal -->
-      </form>
-    </div>
-  </div>
-  <!-- js placed at the end of the document so the pages load faster -->
-  <script src="/lib/jquery/jquery.min.js"></script>
-  <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
-  <!--BACKSTRETCH-->
-  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
-  <script type="text/javascript" src="/lib/jquery.backstretch.min.js"></script>
-  <script>
-    $.backstretch("/img/login-bg.jpg", {
-      speed: 500
-    });
-  </script>
+        <div class="div-bor " style="float:left;width:300px;">
+            <i class="layui-icon layui-icon-tips icon-user" ></i>
+            <input   style="border-radius: 0px 0px 5px 5px;" id="cc" type="text"  name="cc" placeholder="验证码">
+        </div>
+        <img   class="layui-inline" id="ccImage" src="${base!}/login/ccImg" onclick="getCC($(this));" title="看不清，换一组" style="cursor: pointer;float:left;height: 80px;width:200px;"/>
+
+
+    </form>
+
+    <input  onclick="submit()" type="submit" value="登录" style="width:48%;">&nbsp;
+    <input onclick="gotoRegister()" type="button" value="注册" style="width:48%;height:61px;">
+</div>
+
 </body>
+<script src="../script/jquery.min.js"></script>
+<script src="../layui/layui.js"></script>
+<script>
+    var $userAccount = $('#userAccount');
+
+    $(document).ready(function(){
+        $("#userAccount").focus();
+        var $inp=$('input');
+        $inp.keypress(function(e){
+            var key=e.which;
+            if(key==13){
+                submit()
+            }
+        });
+    });
+
+    function submit() {
+        $userAccount.val($userAccount.val());
+
+        var $password = $('#password');
+        $userAccount.val($userAccount.val());
+
+
+        var param = $('#loginFrm').serialize();
+        var url = '${base!}/login/login.json';
+
+        $.post(url,param,function(result) {
+            if (result.success != null) {
+                window.location.href = "${base!}/login/index.html"
+            } else {
+                layui.use('layer',function(){
+
+                    var layer = layui.layer;
+                    layer.msg(result.error);
+                    // getCC(document.getElementById("ccImage"));
+                    getCC($('#ccImage'));
+                })
+
+            }
+        });
+
+        $userAccount.val('');
+        $password.val('');
+
+    }
+
+    function getCC(imgObj) {
+        <#--imgObj.src = '${base!}/login/ccImg?'+ new Date().getTime();-->
+        imgObj.attr('src','${base!}/login/ccImg?'+ new Date().getTime());
+    }
+
+    function gotoRegister() {
+        window.location.href = '../login/register.html';
+    }
+
+</script>
+
 </html>

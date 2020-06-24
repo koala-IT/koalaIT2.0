@@ -72,7 +72,7 @@ public class DES3Utils {
 
     public static String decode(String encryptText, String secretKey)
             throws Exception {
-        if (StringUtils.isBlank(encryptText)||StringUtils.isBlank(secretKey)) {
+        if (StringUtils.isBlank(encryptText)|| StringUtils.isBlank(secretKey)) {
             return "";
         }
         Key deskey = null;

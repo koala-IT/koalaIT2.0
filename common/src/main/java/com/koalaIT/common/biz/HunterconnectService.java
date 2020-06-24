@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class HunterconnectService <T extends BaseDO,E extends BaseExample> extends BaseService<T,E>{
+public class HunterconnectService<T extends BaseDO,E extends BaseExample> extends BaseService<T,E>{
     private Logger logger = Logger.getLogger(HunterconnectService.class);
 
     @Autowired

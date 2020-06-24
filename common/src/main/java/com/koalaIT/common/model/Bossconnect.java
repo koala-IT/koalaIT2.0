@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class Bossconnect extends BaseDO{
-    private Integer number;
+    private Integer cid;
 
     private Integer bossId;
 
@@ -12,12 +12,12 @@ public class Bossconnect extends BaseDO{
 
     private Integer check;
 
-    public Integer getNumber() {
-        return number;
+    public Integer getCid() {
+        return cid;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 
     public Integer getBossId() {

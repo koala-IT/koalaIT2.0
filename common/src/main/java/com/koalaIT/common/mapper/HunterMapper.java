@@ -15,5 +15,7 @@ public interface HunterMapper <T extends BaseDO, E extends BaseExample> extends 
 
     List<Hunter> getHunterInfoByOrder(Integer userId);
 
+    List<Hunter> fingMyHunterCollect (Integer userId);
+
 
 }

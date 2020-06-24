@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.koalaIT.common.mapper.HuntercollectMapper" >
+  <resultMap id="BaseResultMap" type="com.koalaIT.common.model.Huntercollect" >
+    <id column="collect_id" property="collectId" jdbcType="INTEGER" />
+    <result column="hunter_id" property="hunterId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="collect_state" property="collectState" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    collect_id, hunter_id, user_id, collect_state
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.koalaIT.common.model.HuntercollectExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from huntercollect
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from huntercollect
+    where collect_id = #{collectId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from huntercollect
+    where collect_id = #{collectId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.koalaIT.common.model.HuntercollectExample" >
+    delete from huntercollect
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.koalaIT.common.model.Huntercollect" >
+    insert into huntercollect (collect_id, hunter_id, user_id,
+      collect_state)
+    values (#{collectId,jdbcType=INTEGER}, #{hunterId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+      #{collectState,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.koalaIT.common.model.Huntercollect" >
+    insert into huntercollect
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="collectId != null" >
+        collect_id,
+      </if>
+      <if test="hunterId != null" >
+        hunter_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="collectState != null" >
+        collect_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="collectId != null" >
+        #{collectId,jdbcType=INTEGER},
+      </if>
+      <if test="hunterId != null" >
+        #{hunterId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="collectState != null" >
+        #{collectState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.koalaIT.common.model.HuntercollectExample" resultType="java.lang.Integer" >
+    select count(*) from huntercollect
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update huntercollect
+    <set >
+      <if test="record.collectId != null" >
+        collect_id = #{record.collectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.hunterId != null" >
+        hunter_id = #{record.hunterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectState != null" >
+        collect_state = #{record.collectState,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update huntercollect
+    set collect_id = #{record.collectId,jdbcType=INTEGER},
+      hunter_id = #{record.hunterId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      collect_state = #{record.collectState,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.koalaIT.common.model.Huntercollect" >
+    update huntercollect
+    <set >
+      <if test="hunterId != null" >
+        hunter_id = #{hunterId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="collectState != null" >
+        collect_state = #{collectState,jdbcType=INTEGER},
+      </if>
+    </set>
+    where collect_id = #{collectId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.koalaIT.common.model.Huntercollect" >
+    update huntercollect
+    set hunter_id = #{hunterId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      collect_state = #{collectState,jdbcType=INTEGER}
+    where collect_id = #{collectId,jdbcType=INTEGER}
+  </update>
+  <select id="fingMyHunterCollect" parameterType="com.koalaIT.common.model.Huntercollect" resultType="java.lang.Integer" >
+    SELECT hunter_title,hunter_detail,company,capacity,salary,work_time,img_url,create_time
+    FROM koala.hunter,koala.huntercollect
+    where huntercollect.collect_state=1
+    and hunter.user_id=huntercollect.user_id
+    and hunter.user_id=#{userId,jdbcType=INTEGER};
+  </select>
+</mapper>

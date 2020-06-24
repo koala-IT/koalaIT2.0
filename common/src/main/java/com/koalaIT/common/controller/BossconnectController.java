@@ -4,7 +4,6 @@ import com.koalaIT.common.biz.BossconnectService;
 import com.koalaIT.common.model.BaseDO;
 import com.koalaIT.common.model.BaseExample;
 import com.koalaIT.common.model.Bossconnect;
-import com.koalaIT.common.util.CommonUtils;
 import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +33,7 @@ public class BossconnectController <T extends BaseDO,E extends BaseExample>exten
     public ResultMap addHunterInfo(Bossconnect bossconnect) {
         ResultMap resultMap = new ResultMap();
 
-        bossconnect.setBossId( Integer.parseInt(CommonUtils.getUUID()));
+
 
 
 

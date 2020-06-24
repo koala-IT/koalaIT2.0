@@ -18,7 +18,7 @@ public class CommonUtils {
 		String uuid = UUID.randomUUID().toString();
 		return uuid.substring(0, 8) + uuid.substring(9, 13) + uuid.substring(14, 18)
 				+ uuid.substring(19, 23) + uuid.substring(24);
-	}    /*随机生成ID*/
+	}
 
 	public static final String ORDER_SN_PREFIX = "O-";// 上传订单编号前缀
 
@@ -116,7 +116,5 @@ public class CommonUtils {
 	public static String getStrngByInt(int length ,int number){
 		return String.format("%0" + length + "d", number);
 	}
-	public static void main(String[] args) {
-		System.out.println(CommonUtils.getAllowanceSn(1));
-	}
+
 }

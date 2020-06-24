@@ -78,6 +78,21 @@ public class HunterService <T extends BaseDO,E extends BaseExample> extends Base
         return list;
     }
 
+    public List<Hunter> getMyHunterCollect(Integer userId){
+        List<Hunter> list = null;
+        try{
+            if (this.hunterMapper == null) {
+                this.hunterMapper = this.getHunterMapper();
+            }
+            if (userId!= null && this.hunterMapper != null){
+                list = this.hunterMapper.fingMyHunterCollect(userId);
+            }
+        }catch(Exception e){
+            logger.error("查询"+ hunter.getClass().getName()+"时，出现错误！错误信息："+e.getMessage());
+        }
+        return list;
+    }
+
 
 
 

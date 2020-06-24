@@ -14,9 +14,7 @@ import java.io.OutputStream;
 import java.util.Hashtable;
 import java.util.Random;
 
-/**
- * 二维码工具类
- */
+
 public class QRCodeUtil {
     private static final String CHARSET = "utf-8";
     private static final String FORMAT_NAME = "JPG";

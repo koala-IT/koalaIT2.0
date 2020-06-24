@@ -2,7 +2,6 @@ package com.koalaIT.common.controller;
 
 import com.koalaIT.common.biz.BossService;
 import com.koalaIT.common.model.*;
-import com.koalaIT.common.util.CommonUtils;
 import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
+
 @RequestMapping(value = "boss")
 public class BossController <T extends BaseDO, E extends BaseExample> extends BaseController<T,E>{
     @Autowired
@@ -19,6 +19,12 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
 
     @Autowired
     private BossService <T,E> bossService;
+
+
+/*    private Timer currentTimer = null;
+
+    private List bossinfo = null;*/
+
 
     @RequestMapping(value="/boss_list.html")
     public ModelAndView selectAllInfo(){
@@ -28,21 +34,26 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
     }
 
     //查询boss的信息
+
     @RequestMapping(value="/findboss.json",method = { RequestMethod.GET })
     @ResponseBody
     public ResultMap getBossInfo() {
         ResultMap resultMap = new ResultMap();
         BossExample bossExample = new BossExample();
 
-
         try {
+/*            if (currentTimer == null) {
+                this.addTestData(10000);
+            }*/
             this.setProperties();
             List t = this.selectByExample((E) bossExample);
             if (t != null) {
-                List<Hunter> list =  t;
+
+                List<Boss> list =  t;
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
                 resultMap.put("areaBossList",list);
+
             }
         } catch(Exception e) {
             e.printStackTrace();
@@ -51,22 +62,41 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
             return resultMap;
         }
 
-        bossExample = null;
 
 
         return resultMap;
     }
+/*    //计时器
+    private void addTestData(int timeInterval) {
+        Calendar calendar = Calendar.getInstance();
+        Date time = calendar.getTime();
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                ResultMap resultMap = new ResultMap();
+                BossExample bossExample = new BossExample();
+                setProperties();
+                List t = selectByExample((E) bossExample);
+            }
+        }, time, timeInterval);
+
+        currentTimer = timer;
+        bossinfo = t;
+    }*/
     //条件查询
     @RequestMapping(value="/searchboss.json", method = { RequestMethod.GET })
     @ResponseBody
     public ResultMap findHunterByOrder(@RequestParam String bossTitle) {
         ResultMap resultMap = new ResultMap();
+        BossExample bossExample = new BossExample();
+        BossExample.Criteria criteria = bossExample.createCriteria();
+        criteria.andBossTitleEqualTo(bossTitle);
 
 
 
         try {
             this.setProperties();
-            List list = bossService.getBossInfo(bossTitle);
+            List list = this.bossService.getBossInfo(bossTitle);
             if (list != null) {
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
@@ -96,16 +126,16 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
 
     @RequestMapping(value="/addboss.json",method = { RequestMethod.POST })
     @ResponseBody
-    public ResultMap addBossInfo(Boss boss) {
+    public ResultMap addBossInfo(@RequestBody Boss bossinfo) {
         ResultMap resultMap = new ResultMap();
 
-        boss.setBossId( Integer.parseInt(CommonUtils.getUUID()));
+       /* boss.setBossId( Integer.parseInt(CommonUtils.getUUID()));*/
 
 
 
         this.setProperties();
 
-        this.insertSelective((T) boss);
+        this.insertSelective((T) bossinfo);
 
         resultMap.setRet(1);
         resultMap.setSuccess("用户注册成功！");
@@ -280,7 +310,7 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
 
     private void setProperties(){                 /*将模板service的方法实体化*/
         bossService.setEntityMapper(bossService.getBossMapper());
-        bossService.setEntity((T)boss);
+        bossService.setEntity((T) boss);
 
         this.setBizService(bossService);
     }

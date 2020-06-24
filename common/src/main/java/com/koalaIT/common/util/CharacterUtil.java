@@ -28,9 +28,9 @@ public class CharacterUtil {
         }
         StringBuilder builder=new StringBuilder(param);
         Matcher mc=p.matcher(param);
-        int i = 0;
+        int i=0;
         while (mc.find()) {
-            builder.replace(mc.start()+i, mc.end() + i, "_" + mc.group().toLowerCase());
+            builder.replace(mc.start()+i, mc.end()+i, "_"+mc.group().toLowerCase());
             i++;
         }
 

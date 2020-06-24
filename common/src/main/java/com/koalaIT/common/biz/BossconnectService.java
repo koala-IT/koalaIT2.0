@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BossconnectService <T extends BaseDO,E extends BaseExample> extends BaseService<T,E>{
-    private Logger logger = Logger.getLogger(HunterService.class);
+public class BossconnectService<T extends BaseDO,E extends BaseExample> extends BaseService<T,E>{
+    private Logger logger = Logger.getLogger(BossconnectService.class);
 
     @Autowired
     private BossconnectMapper<T,E> bossconnectMapper;
