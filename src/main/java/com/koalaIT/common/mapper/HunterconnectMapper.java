@@ -10,7 +10,7 @@ public interface HunterconnectMapper {
 
     int deleteByExample(HunterconnectExample example);
 
-    int deleteByPrimaryKey(Integer number);
+    int deleteByPrimaryKey(Integer cid);
 
     int insert(Hunterconnect record);
 
@@ -18,7 +18,7 @@ public interface HunterconnectMapper {
 
     List<Hunterconnect> selectByExample(HunterconnectExample example);
 
-    Hunterconnect selectByPrimaryKey(Integer number);
+    Hunterconnect selectByPrimaryKey(Integer cid);
 
     int updateByExampleSelective(@Param("record") Hunterconnect record, @Param("example") HunterconnectExample example);
 

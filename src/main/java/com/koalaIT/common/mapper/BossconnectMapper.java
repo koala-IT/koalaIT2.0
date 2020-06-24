@@ -10,7 +10,7 @@ public interface BossconnectMapper {
 
     int deleteByExample(BossconnectExample example);
 
-    int deleteByPrimaryKey(Integer number);
+    int deleteByPrimaryKey(Integer cid);
 
     int insert(Bossconnect record);
 
@@ -18,7 +18,7 @@ public interface BossconnectMapper {
 
     List<Bossconnect> selectByExample(BossconnectExample example);
 
-    Bossconnect selectByPrimaryKey(Integer number);
+    Bossconnect selectByPrimaryKey(Integer cid);
 
     int updateByExampleSelective(@Param("record") Bossconnect record, @Param("example") BossconnectExample example);
 
