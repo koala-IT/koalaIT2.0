@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.koalaIT.common.mapper.BossconnectMapper" >
   <resultMap id="BaseResultMap" type="com.koalaIT.common.model.Bossconnect" >
-    <id column="number" property="number" jdbcType="INTEGER" />
+    <id column="cid" property="cid" jdbcType="INTEGER" />
     <result column="boss_id" property="bossId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="check" property="check" jdbcType="INTEGER" />
@@ -66,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    number, boss_id, user_id, check
+    cid, boss_id, user_id, check
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.koalaIT.common.model.BossconnectExample" >
     select
@@ -86,11 +86,11 @@
     select 
     <include refid="Base_Column_List" />
     from bossconnect
-    where number = #{number,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from bossconnect
-    where number = #{number,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.koalaIT.common.model.BossconnectExample" >
     delete from bossconnect
@@ -99,16 +99,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.koalaIT.common.model.Bossconnect" >
-    insert into bossconnect (number, boss_id, user_id, 
+    insert into bossconnect (cid, boss_id, user_id, 
       check)
-    values (#{number,jdbcType=INTEGER}, #{bossId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+    values (#{cid,jdbcType=INTEGER}, #{bossId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
       #{check,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.koalaIT.common.model.Bossconnect" >
     insert into bossconnect
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="number != null" >
-        number,
+      <if test="cid != null" >
+        cid,
       </if>
       <if test="bossId != null" >
         boss_id,
@@ -121,8 +121,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="number != null" >
-        #{number,jdbcType=INTEGER},
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
       </if>
       <if test="bossId != null" >
         #{bossId,jdbcType=INTEGER},
@@ -144,8 +144,8 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update bossconnect
     <set >
-      <if test="record.number != null" >
-        number = #{record.number,jdbcType=INTEGER},
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=INTEGER},
       </if>
       <if test="record.bossId != null" >
         boss_id = #{record.bossId,jdbcType=INTEGER},
@@ -163,7 +163,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update bossconnect
-    set number = #{record.number,jdbcType=INTEGER},
+    set cid = #{record.cid,jdbcType=INTEGER},
       boss_id = #{record.bossId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
       check = #{record.check,jdbcType=INTEGER}
@@ -184,13 +184,28 @@
         check = #{check,jdbcType=INTEGER},
       </if>
     </set>
-    where number = #{number,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.koalaIT.common.model.Bossconnect" >
     update bossconnect
     set boss_id = #{bossId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       check = #{check,jdbcType=INTEGER}
-    where number = #{number,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
   </update>
+  <select id="findBossByID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select `user`.user_name,bossconnect.*,boss.boss_title,boss.price,boss.orderhunter,`checkconnect`.state
+
+    from  koalait.boss,koalait.user,koalait.checkconnect,koalait.bossconnect
+    where bossconnect.check=checkconnect.check and bossconnect.user_id=`user`.user_id and bossconnect.boss_id=boss.boss_id and `boss`.user_id=#{userId,jdbcType=INTEGER}
+  </select>
+  <update id="addCheck" parameterType="com.koalaIT.common.model.Bossconnect" >
+    update `koalait`.`bossconnect`
+    set check = #{check,jdbcType=INTEGER}
+    where boss_id = #{bossId,jdbcType=INTEGER} and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <delete id="delBossConnect" parameterType="java.lang.Integer" >
+    delete from bossconnect
+    where boss_id = #{bossId,jdbcType=INTEGER}, user_id = #{userId,jdbcType=INTEGER}
+  </delete>
 </mapper>

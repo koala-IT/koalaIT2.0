@@ -1,9 +1,7 @@
 package com.koalaIT.common.controller;
 
 import com.koalaIT.common.biz.BossconnectService;
-import com.koalaIT.common.model.BaseDO;
-import com.koalaIT.common.model.BaseExample;
-import com.koalaIT.common.model.Bossconnect;
+import com.koalaIT.common.model.*;
 import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,37 +30,50 @@ public class BossconnectController <T extends BaseDO,E extends BaseExample>exten
     @ResponseBody
     public ResultMap addHunterInfo(Bossconnect bossconnect) {
         ResultMap resultMap = new ResultMap();
+        if(bossconnect.getUserId() == null){
+            resultMap.setRet(0);
+            resultMap.setError("没有收到用户ID");
+        }else if (bossconnect.getBossId() == null){
+            resultMap.setRet(0);
+            resultMap.setError("没有收到BossID");
+        }else {
+            this.setProperties();
+            this.insertSelective((T) bossconnect);
 
+            resultMap.setRet(1);
+            resultMap.setSuccess("用户注册成功！");
 
-
-
-
-/*        bossconnectService.setEntityMapper(bossconnectService.getBossconnectMapper());
-        bossconnectService.setEntity((T) bossconnect);
-        this.setBizService(bossconnectService);  //方法详细位于末尾*/
-        this.setProperties();
-
-        this.insertSelective((T) bossconnect);
-
-        resultMap.setRet(1);
-        resultMap.setSuccess("用户注册成功！");
-        resultMap.put("success", 1);
+        }
         return resultMap;
+
     }
     //取消预约
     @RequestMapping(value="/delorder.json",method = { RequestMethod.GET })
     @ResponseBody
     public ResultMap delBossconnect(@RequestBody Bossconnect bossconnect) {
         ResultMap resultMap = new ResultMap();
+        BossconnectExample bossconnectExample = new BossconnectExample();
+        BossconnectExample.Criteria criteria = bossconnectExample.createCriteria();
+        if(bossconnect.getUserId() == null){
+            resultMap.setRet(0);
+            resultMap.setError("没有收到用户ID");
+        }else if (bossconnect.getBossId() == null){
+            resultMap.setRet(0);
+            resultMap.setError("没有收到BossID");
+        }else {
+            criteria.andBossIdEqualTo(bossconnect.getBossId());
+            criteria.andUserIdEqualTo(bossconnect.getUserId());
 
-        this.setProperties();
+            this.setProperties();
+            this.deleteByExample((E) bossconnectExample);
 
-        resultMap.put("success",bossconnectService.delBossInfo(bossconnect));
 
-        resultMap.setRet(1);
-        resultMap.setSuccess("删除求职信息成功！");
-   /*     resultMap.put("success",1);*/
+            resultMap.setRet(1);
+            resultMap.setSuccess("删除求职信息成功！");
+            /*     resultMap.put("success",1);*/
+        }
         return resultMap;
+
     }
 
     //

@@ -104,63 +104,63 @@ public class HunterconnectExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andNumberIsNull() {
-            addCriterion("number is null");
+        public Criteria andCidIsNull() {
+            addCriterion("cid is null");
             return (Criteria) this;
         }
 
-        public Criteria andNumberIsNotNull() {
-            addCriterion("number is not null");
+        public Criteria andCidIsNotNull() {
+            addCriterion("cid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNumberEqualTo(Integer value) {
-            addCriterion("number =", value, "number");
+        public Criteria andCidEqualTo(Integer value) {
+            addCriterion("cid =", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andNumberNotEqualTo(Integer value) {
-            addCriterion("number <>", value, "number");
+        public Criteria andCidNotEqualTo(Integer value) {
+            addCriterion("cid <>", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andNumberGreaterThan(Integer value) {
-            addCriterion("number >", value, "number");
+        public Criteria andCidGreaterThan(Integer value) {
+            addCriterion("cid >", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andNumberGreaterThanOrEqualTo(Integer value) {
-            addCriterion("number >=", value, "number");
+        public Criteria andCidGreaterThanOrEqualTo(Integer value) {
+            addCriterion("cid >=", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andNumberLessThan(Integer value) {
-            addCriterion("number <", value, "number");
+        public Criteria andCidLessThan(Integer value) {
+            addCriterion("cid <", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andNumberLessThanOrEqualTo(Integer value) {
-            addCriterion("number <=", value, "number");
+        public Criteria andCidLessThanOrEqualTo(Integer value) {
+            addCriterion("cid <=", value, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andNumberIn(List<Integer> values) {
-            addCriterion("number in", values, "number");
+        public Criteria andCidIn(List<Integer> values) {
+            addCriterion("cid in", values, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andNumberNotIn(List<Integer> values) {
-            addCriterion("number not in", values, "number");
+        public Criteria andCidNotIn(List<Integer> values) {
+            addCriterion("cid not in", values, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andNumberBetween(Integer value1, Integer value2) {
-            addCriterion("number between", value1, value2, "number");
+        public Criteria andCidBetween(Integer value1, Integer value2) {
+            addCriterion("cid between", value1, value2, "cid");
             return (Criteria) this;
         }
 
-        public Criteria andNumberNotBetween(Integer value1, Integer value2) {
-            addCriterion("number not between", value1, value2, "number");
+        public Criteria andCidNotBetween(Integer value1, Integer value2) {
+            addCriterion("cid not between", value1, value2, "cid");
             return (Criteria) this;
         }
 

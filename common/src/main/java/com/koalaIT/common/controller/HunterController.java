@@ -44,11 +44,13 @@ public class HunterController <T extends BaseDO,E extends BaseExample> extends B
         try {
             this.setProperties();
             List t = this.selectByExample((E) hunterExample);
+            Integer hunterCount = this.countByExample((E) hunterExample);
             if (t != null) {
                 List<Hunter> list =  t;
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
                 resultMap.put("areaHunterList",list);
+                resultMap.put("hunterCount",hunterCount);
             }
         } catch(Exception e) {
             e.printStackTrace();

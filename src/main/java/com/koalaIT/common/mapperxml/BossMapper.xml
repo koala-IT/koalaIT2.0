@@ -320,4 +320,28 @@
       checkstate = #{checkstate,jdbcType=INTEGER}
     where boss_id = #{bossId,jdbcType=INTEGER}
   </update>
+  <select id="searchBossInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from koalait.boss
+    where boss_title like #{bossTitle,jdbcType=VARCHAR} order by boss_id desc
+  </select>
+  <select id="getBossByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select boss.*,`user`.user_name
+
+    from koalait.user join koalait.boss on boss.user_id=`user`.user_id
+    where boss.user_id=`user`.user_id and `user`.user_id=#{userId,jdbcType=INTEGER}
+  </select>
+  <select id="findBossInfoByOrder" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select boss.*,bossconnect.`check`,checkconnect.state
+
+    from koalait.boss,koalait.bossconnect,koalait.checkconnect
+    where boss.boss_id=bossconnect.boss_id and checkconnect.`check`=bossconnect.`check` and bossconnect.user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="getBossInfoByOrder" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from koalait.boss,koalait.user
+    where orderhunter IS not NULL and boss.user_id=`user`.user_id and `user`.user_id = #{userId,jdbcType=INTEGER}
+  </select>
 </mapper>

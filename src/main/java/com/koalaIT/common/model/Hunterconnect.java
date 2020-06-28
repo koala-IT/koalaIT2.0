@@ -1,7 +1,7 @@
 package com.koalaIT.common.model;
 
 public class Hunterconnect {
-    private Integer number;
+    private Integer cid;
 
     private Integer hunterId;
 
@@ -9,12 +9,12 @@ public class Hunterconnect {
 
     private Integer check;
 
-    public Integer getNumber() {
-        return number;
+    public Integer getCid() {
+        return cid;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 
     public Integer getHunterId() {

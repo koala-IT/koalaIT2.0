@@ -1,7 +1,7 @@
 package com.koalaIT.common.model;
 
 public class Bossconnect {
-    private Integer number;
+    private Integer cid;
 
     private Integer bossId;
 
@@ -9,12 +9,12 @@ public class Bossconnect {
 
     private Integer check;
 
-    public Integer getNumber() {
-        return number;
+    public Integer getCid() {
+        return cid;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setCid(Integer cid) {
+        this.cid = cid;
     }
 
     public Integer getBossId() {

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import java.util.*;
 
 @Controller
 
@@ -21,9 +21,9 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
     private BossService <T,E> bossService;
 
 
-/*    private Timer currentTimer = null;
+    private Timer currentTimer = null;
 
-    private List bossinfo = null;*/
+
 
 
     @RequestMapping(value="/boss_list.html")
@@ -47,12 +47,14 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
             }*/
             this.setProperties();
             List t = this.selectByExample((E) bossExample);
+            Integer bossCount = this.countByExample((E) bossExample);
             if (t != null) {
 
                 List<Boss> list =  t;
                 resultMap.setRet(1);
                 resultMap.setSuccess("查询详细信息成功！");
                 resultMap.put("areaBossList",list);
+                resultMap.put("bossCount",bossCount);
 
             }
         } catch(Exception e) {
@@ -62,27 +64,34 @@ public class BossController <T extends BaseDO, E extends BaseExample> extends Ba
             return resultMap;
         }
 
-
+        if (currentTimer == null) {
+            this.addTestData(10000);
+        }
 
         return resultMap;
     }
-/*    //计时器
+    //计时器
     private void addTestData(int timeInterval) {
         Calendar calendar = Calendar.getInstance();
         Date time = calendar.getTime();
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
-                ResultMap resultMap = new ResultMap();
-                BossExample bossExample = new BossExample();
+
+/*                SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间
+                sdf.applyPattern("yyyy-MM-dd HH:mm:ss a");// a为am/pm的标记*/
+                Date date = new Date();// 获取当前时间
+                boss.setCreateTime(date);
+
                 setProperties();
-                List t = selectByExample((E) bossExample);
+                insertSelective((T)  boss);
+                boss = null;
             }
         }, time, timeInterval);
 
         currentTimer = timer;
-        bossinfo = t;
-    }*/
+
+    }
     //条件查询
     @RequestMapping(value="/searchboss.json", method = { RequestMethod.GET })
     @ResponseBody

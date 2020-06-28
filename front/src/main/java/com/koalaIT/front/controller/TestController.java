@@ -5,9 +5,13 @@ import com.koalaIT.common.controller.BaseController;
 import com.koalaIT.common.model.BaseDO;
 import com.koalaIT.common.model.BaseExample;
 import com.koalaIT.common.model.Hunter;
+import com.koalaIT.common.model.HunterExample;
+import com.koalaIT.common.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "test")
@@ -19,9 +23,9 @@ public class TestController <T extends BaseDO, E extends BaseExample> extends Ba
     @Autowired
     private HunterService<T,E> hunterService;
 
-/*    @RequestMapping(value="/tabRoute_list.json")
+   @RequestMapping(value="/test_list.json" ,method = { RequestMethod.GET })
     @ResponseBody
-    public ResultMap gotoList(HunterDTO hunterDTO) {
+    public ResultMap hcount( ) {
         ResultMap resultMap = new ResultMap();
 
         HunterExample hunterExample = new HunterExample();
@@ -29,8 +33,54 @@ public class TestController <T extends BaseDO, E extends BaseExample> extends Ba
         HunterExample hunterExample1 = new HunterExample();
         HunterExample.Criteria criteria1 = hunterExample1.createCriteria();
         HunterExample.Criteria criteria = hunterExample.createCriteria();
+        Integer hunterCount = 0;
 
-        //判断价格区间
+        hunterService.setEntityMapper(hunterService.getHunterMapper());
+        hunterService.setEntity((T) new Hunter());
+
+        hunterCount = this.countByExample((E) hunterExample1);
+
+        hunterExample = null;
+        hunterExample1 = null;
+
+        resultMap.setRet(1);
+        resultMap.setSuccess("分页查询成功！");
+        resultMap.put("hunterCount",hunterCount);
+        return resultMap;
+    }
+
+    @RequestMapping(value="/counthunter.json" ,method = { RequestMethod.GET })
+    @ResponseBody
+    public ResultMap counthunter( ) {
+        ResultMap resultMap = new ResultMap();
+
+        HunterExample hunterExample = new HunterExample();
+//        tabRouteExample.setOrderByClause("rdate desc");
+        HunterExample hunterExample1 = new HunterExample();
+        HunterExample.Criteria criteria1 = hunterExample1.createCriteria();
+        HunterExample.Criteria criteria = hunterExample.createCriteria();
+        criteria.andHunterTitleLike("java");
+        criteria1.andHunterTitleLike("web");
+        Integer hunterCount = 0;
+        Integer hunterCount1 = 0;
+
+        hunterService.setEntityMapper(hunterService.getHunterMapper());
+        hunterService.setEntity((T) new Hunter());
+
+        hunterCount = this.countByExample((E) hunterExample);
+        hunterCount1 = this.countByExample((E) hunterExample1);
+
+        hunterExample = null;
+        hunterExample1 = null;
+
+        resultMap.setRet(1);
+        resultMap.setSuccess("分页查询成功！");
+        resultMap.put("hunterCount",hunterCount);
+        resultMap.put("hunterCount1",hunterCount1);
+        return resultMap;
+    }
+
+/*        //判断价格区间
         String priceStr = hunterDTO.getPriceStr();
         if (priceStr != null) {
             String[] priceStrs = priceStr.split("~");
@@ -55,11 +105,11 @@ public class TestController <T extends BaseDO, E extends BaseExample> extends Ba
                 criteria.andRdateBetween(rdateStrs[0].trim(),rdateStrs[1].trim());
                 criteria1.andRdateBetween(rdateStrs[0].trim(),rdateStrs[1].trim());
             }
-        }
+        }*/
 
-        this.setProperties();
 
-        List<TabRouteVO>  tabRouteVOList = null;
+
+/*        List<TabRouteVO>  tabRouteVOList = null;
         Integer tabRouteCount = 0;
         try {
             tabRouteCount = this.countByExample((E) tabRouteExample1);
@@ -83,16 +133,10 @@ public class TestController <T extends BaseDO, E extends BaseExample> extends Ba
 
         resultMap.setData(tabRouteVOList);
         resultMap.put("pageAmount",tabRouteCount);
+*/
 
-        tabRouteExample = null;
-        tabRouteExample1 = null;
 
-        resultMap.setRet(1);
-        resultMap.setSuccess("分页查询成功！");
-        return resultMap;
-    }
-
-    @RequestMapping(value="/detail.json")
+  /*   @RequestMapping(value="/detail.json")
     @ResponseBody
     public ResultMap getDetail(String rid) {
         ResultMap resultMap = new ResultMap();

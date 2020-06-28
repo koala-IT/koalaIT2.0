@@ -30,14 +30,23 @@ public class BossCollectController <T extends BaseDO, E extends BaseExample> ext
     @ResponseBody
     public ResultMap addBosscollect(Bosscollect bosscollect) {
         ResultMap resultMap = new ResultMap();
+        if(bosscollect.getUserId() == null){
+            resultMap.setRet(0);
+            resultMap.setError("没有收到用户ID");
+        }else if (bosscollect.getBossId() == null){
+            resultMap.setRet(0);
+            resultMap.setError("没有收到BossID");
+        }else {
+            this.setProperties();
+            this.insertSelective((T) bosscollect);
+
+            resultMap.setRet(1);
+            resultMap.setSuccess("用户注册成功！");
+            resultMap.put("success", 1);
+        }
 
 
-        this.setProperties();
-        this.insertSelective((T) bosscollect);
 
-        resultMap.setRet(1);
-        resultMap.setSuccess("用户注册成功！");
-        resultMap.put("success", 1);
         return resultMap;
     }
     //取消收藏
@@ -47,15 +56,23 @@ public class BossCollectController <T extends BaseDO, E extends BaseExample> ext
         ResultMap resultMap = new ResultMap();
         BosscollectExample bosscollectExample = new BosscollectExample();
         BosscollectExample.Criteria criteria = bosscollectExample.createCriteria();
-        criteria.andBossIdEqualTo(bosscollect.getBossId());
-        criteria.andUserIdEqualTo(bosscollect.getUserId());
+        if(bosscollect.getUserId() == null){
+            resultMap.setRet(0);
+            resultMap.setError("没有收到用户ID");
+        }else if (bosscollect.getBossId() == null){
+            resultMap.setRet(0);
+            resultMap.setError("没有收到BossID");
+        }else {
+            criteria.andBossIdEqualTo(bosscollect.getBossId());
+            criteria.andUserIdEqualTo(bosscollect.getUserId());
 
-        this.setProperties();
+            this.setProperties();
+            this.deleteByExample((E) bosscollectExample);
 
-        this.deleteByExample((E) bosscollectExample);
+            resultMap.setRet(1);
+            resultMap.setSuccess("删除求职信息成功！");
+        }
 
-        resultMap.setRet(1);
-        resultMap.setSuccess("删除求职信息成功！");
         /*     resultMap.put("success",1);*/
         return resultMap;
     }
@@ -64,7 +81,11 @@ public class BossCollectController <T extends BaseDO, E extends BaseExample> ext
     @ResponseBody
     public ResultMap findHunterByOrder(@RequestParam Integer userId) {
         ResultMap resultMap = new ResultMap();
-
+        if (userId == null){
+            resultMap.setRet(0);
+            resultMap.setError("userId不能为空！");
+            return resultMap;
+        }
         try {
             this.setProperties();
             List list = this.bossService.getMyBossCollect(userId);
